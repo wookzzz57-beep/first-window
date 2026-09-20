@@ -120,27 +120,27 @@
     ]
   },
   "public_surface": {
-    "accepted_main_sha": "629a846ea5d13f0fc83a568c8d6cda318883a9a4",
+    "accepted_main_sha": "767fbf9c5f4552219311681781faf24234c79b9c",
     "production_url": "https://firstwindow-public.vercel.app",
     "production_deployment_id": "dpl_G7TPV8JNzKspE1aoBjMm6w8jPcaW",
     "external_verify_run": 35504289632,
-    "real_capture_png_sha256": "f626958a1d5b3adcf57ef9cd7fec7de4d45ec019bd05eaebb0b2a77bd9f2a6fe",
-    "real_capture_gif_sha256": "0b80461859241ef346386e740b5f0c385038911e3648be018d7997be8885a547",
+    "real_capture_png_sha256": "02a54467d2208a05a0dfe6b5a60fc68cc25620b491c01bbdd50a73915979e3b5",
+    "real_capture_gif_sha256": "a973fce2b6bef560b7e4c90b0e0b8955abd56a97467cf2c5315e12b3118daac1",
     "files": [
       {
         "path": "README.md",
-        "git_blob_sha": "16bd8392fd8d0098b53076951a191be23bf2d0cb",
-        "size": 9587
+        "git_blob_sha": "563e2eb310b803dd21ec4354b428a59c99c2a190",
+        "size": 9496
       },
       {
         "path": "docs/assets/firstwindow-startup.gif",
-        "git_blob_sha": "673932fcd07779b3a6a3994673aa614e7c6c75b0",
-        "size": 148790
+        "git_blob_sha": "613b531413ccef74686160c257a5f74f3f391d7c",
+        "size": 526946
       },
       {
         "path": "docs/assets/firstwindow-window.png",
-        "git_blob_sha": "6ac5c5ff1a02087609ed3ab3e1ecbe8836919a0b",
-        "size": 101274
+        "git_blob_sha": "98b8bb47fce3064d34efd9d9cc24f90473e1f180",
+        "size": 74103
       },
       {
         "path": "site/app.js",
@@ -149,8 +149,8 @@
       },
       {
         "path": "site/index.html",
-        "git_blob_sha": "82a9eb63d3a5777e8d7ab1330e5c68105165782d",
-        "size": 6727
+        "git_blob_sha": "2727be497fe68e5641bdf913fdd6998b25d92966",
+        "size": 7093
       },
       {
         "path": "site/styles.css",
