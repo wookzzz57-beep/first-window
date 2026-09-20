@@ -44,7 +44,7 @@
   "control_board_issue": 8,
   "wip_limit": 1,
   "resume_point": "v0.4.2 release engineering and production acceptance are complete. Product baseline is frozen at v0.4.2. Resume issue #17 with EXP-002 aggregate observation through 2026-09-21 12:40 +08:00; record net star/download/direct-feedback deltas without per-channel attribution. After that window, TikTok scheduled for 2026-09-21 18:00 Asia/Shanghai is the next single channel; read back its public result before activating any second variant or channel.",
-  "last_verified_main_sha": "b5e68df320300abf27e9c18611673ba372717279",
+  "last_verified_main_sha": "bd07abdad5e8f14ec03dadd7a11ef3a7220b13df",
   "evidence": {
     "main_linux_ci_run": 35438404706,
     "main_linux_ci": "success",
@@ -479,6 +479,31 @@
       "production_real_capture_sha256_verified": true,
       "production_latest_exe_sha256_verified": true,
       "release_engineering_closed": true
+    },
+    "issue_40": {
+      "status": "protection-enabled-closure-pr-pending",
+      "issue": 40,
+      "guard_pr": 41,
+      "guard_pr_head": "84da81236b29cf32883c898816f6bb5c85a7ca81",
+      "guard_pr_ci_run": 35505034191,
+      "guard_pr_ci": "success",
+      "guard_pr_windows_run": 35505034194,
+      "guard_pr_windows": "success",
+      "guard_merge_sha": "bd07abdad5e8f14ec03dadd7a11ef3a7220b13df",
+      "guard_main_ci_run": 35505116996,
+      "guard_main_ci": "success",
+      "guard_main_windows_run": 35505117011,
+      "guard_main_windows": "success",
+      "baseline_manifest": "STABLE_BASELINE.json",
+      "branch_protection_enabled": true,
+      "branch_protection_required_checks": [
+        "test",
+        "build-windows"
+      ],
+      "branch_protection_enforce_admins": true,
+      "branch_protection_allow_force_pushes": false,
+      "branch_protection_allow_deletions": false,
+      "runtime_or_public_files_changed": false
     }
   },
   "external_blockers": [],
@@ -523,5 +548,30 @@
     "only one materially distinct launch experiment is active at a time",
     "stars, visits, downloads, and comments are signals rather than proof of product quality",
     "fake engagement, spam, fabricated evidence, and deceptive launch claims are prohibited"
-  ]
+  ],
+  "stable_baseline": {
+    "id": "v0.4.2-stable",
+    "status": "protected-and-machine-checked",
+    "manifest": "STABLE_BASELINE.json",
+    "runtime_release": "v0.4.2",
+    "runtime_tag_sha": "73454bb09cfaf4c43a3fcc1a77cd3d0e80375148",
+    "release_id": 392384670,
+    "release_exe_sha256": "953f5f260439976d46db4f6b81dd3a74afca83e006edd0d3daf0c24b538b11b0",
+    "public_surface_sha": "b5e68df320300abf27e9c18611673ba372717279",
+    "guard_merge_sha": "bd07abdad5e8f14ec03dadd7a11ef3a7220b13df",
+    "main_protection": {
+      "enabled": true,
+      "enforce_admins": true,
+      "pull_request_required": true,
+      "required_status_checks": [
+        "test",
+        "build-windows"
+      ],
+      "required_approving_reviews": 0,
+      "required_conversation_resolution": true,
+      "allow_force_pushes": false,
+      "allow_deletions": false
+    },
+    "mutation_rule": "Runtime/public drift requires an explicit scoped engineering transition before a new accepted baseline can replace v0.4.2."
+  }
 }
