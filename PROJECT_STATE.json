@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
   "project": "FirstWindow",
-  "phase": "v0.4.2-beginner-ux",
+  "phase": "v0.4.2-release",
   "status": "active",
   "canonical_branch": "main",
   "current_release": "v0.4.1",
-  "primary_objective": "Implement issue #34: simplify FirstWindow into a beginner-first 3-step UX while preserving the verified v0.4.1 runtime and safety semantics.",
-  "active_engineering_issue": 34,
+  "primary_objective": "Implement issue #36: final beginner polish, ship verified v0.4.2, capture the real release EXE, replace public visuals, and then resume launch.",
+  "active_engineering_issue": 36,
   "engineering_queue": [
-    34
+    36
   ],
   "completed_engineering_issues": [
     4,
@@ -17,7 +17,8 @@
     16,
     19,
     22,
-    25
+    25,
+    34
   ],
   "launch_track": [
     17
@@ -33,16 +34,16 @@
       "id": "EXP-001",
       "issue": 17,
       "channel": "Hacker News / Show HN",
-      "status": "paused-for-engineering-issue-34",
+      "status": "paused-for-release-issue-36",
       "published_url": null,
       "product_baseline_frozen": true,
-      "engineering_wip": 0,
+      "engineering_wip": 1,
       "next_action": "Reconcile any already-published Show HN item URL/time into issue #17; if none exists, publish only EXP-001. Do not open a second channel before recording its result/decision."
     }
   },
   "control_board_issue": 8,
   "wip_limit": 1,
-  "resume_point": "Issue #34 implementation is accepted on PR #35: local 113/113 tests pass, source GUI self-test passes at 820x680, CI #203 succeeded, and Windows App #87 succeeded including packaged self-test and packaged bilingual UI self-test. Next action is merge PR #35. Do not publish a v0.4.2 release or replace public real-capture assets until that release work is separately scoped and verified. Launch EXP-001 remains paused until engineering closure.",
+  "resume_point": "Issue #36 active on release-v0.4.2-beginner-polish. First remove remaining beginner-path noise without touching runtime/security semantics; then validate, package, tag v0.4.2, capture the real release EXE, replace public visuals, verify production, and only then resume issue #17 launch work.",
   "last_verified_main_sha": "38a489cc929cf109c8fe17df6a7803d5ab715d24",
   "evidence": {
     "main_linux_ci_run": 35438404706,

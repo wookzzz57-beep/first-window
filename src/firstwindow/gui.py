@@ -99,7 +99,19 @@ def main(*, ui_self_test: bool = False) -> int:
             style.configure("Status.TLabel", background="#ffffff", foreground="#111827", font=("Segoe UI", 14, "bold"))
             style.configure("Hint.TLabel", background="#ffffff", foreground="#667085", font=("Segoe UI", 10))
             style.configure("Muted.TLabel", background="#ffffff", foreground="#667085", font=("Segoe UI", 9))
-            style.configure("Primary.TButton", font=("Segoe UI", 10, "bold"), padding=(18, 10))
+            style.configure(
+                "Primary.TButton",
+                font=("Segoe UI", 10, "bold"),
+                padding=(18, 10),
+                background="#3157d5",
+                foreground="#ffffff",
+                borderwidth=0,
+            )
+            style.map(
+                "Primary.TButton",
+                background=[("active", "#2748b8"), ("disabled", "#aab5d6")],
+                foreground=[("disabled", "#f5f7ff")],
+            )
             style.configure("Secondary.TButton", font=("Segoe UI", 9), padding=(12, 8))
             style.configure("Link.TButton", font=("Segoe UI", 9), padding=(8, 6))
             style.configure("Advanced.TFrame", background="#ffffff")
@@ -149,12 +161,6 @@ def main(*, ui_self_test: bool = False) -> int:
                 style="Primary.TButton",
             )
             self.one_click_button.pack(side="left")
-            self.diagnose_button = ttk.Button(
-                status_actions,
-                command=self.refresh,
-                style="Secondary.TButton",
-            )
-            self.diagnose_button.pack(side="left", padx=(8, 0))
 
             self.project_box = ttk.LabelFrame(self.outer, padding=16, style="Card.TLabelframe")
             self.project_box.pack(fill="x", pady=(12, 0))
@@ -165,32 +171,30 @@ def main(*, ui_self_test: bool = False) -> int:
             )
             self.browse_button = ttk.Button(row, command=self.choose_project, style="Primary.TButton")
             self.browse_button.pack(side="left", padx=(8, 0))
-            self.demo_button = ttk.Button(row, command=self.create_demo, style="Link.TButton")
-            self.demo_button.pack(side="left", padx=(6, 0))
 
-            resume_row = ttk.Frame(self.project_box, style="Advanced.TFrame")
-            resume_row.pack(fill="x", pady=(8, 0))
+            self.resume_row = ttk.Frame(self.project_box, style="Advanced.TFrame")
             ttk.Label(
-                resume_row,
+                self.resume_row,
                 textvariable=self.resume_var,
                 style="Muted.TLabel",
             ).pack(side="left", fill="x", expand=True)
-            self.refresh_resume_button = ttk.Button(
-                resume_row,
-                command=self.refresh_resume,
-                style="Link.TButton",
-            )
-            self.refresh_resume_button.pack(side="right")
             self.resume_button = ttk.Button(
-                resume_row,
+                self.resume_row,
                 command=self.resume_latest,
                 state="disabled",
                 style="Secondary.TButton",
             )
-            self.resume_button.pack(side="right", padx=(0, 6))
+            self.resume_button.pack(side="right", padx=(8, 0))
 
             self.task_box = ttk.LabelFrame(self.outer, padding=16, style="Card.TLabelframe")
             self.task_box.pack(fill="both", expand=True, pady=(12, 0))
+            self.task_hint_label = ttk.Label(
+                self.task_box,
+                style="Hint.TLabel",
+                justify="left",
+                wraplength=790,
+            )
+            self.task_hint_label.pack(anchor="w", pady=(0, 8))
             self.task = tk.Text(
                 self.task_box,
                 height=6,
@@ -251,6 +255,27 @@ def main(*, ui_self_test: bool = False) -> int:
                 command=self._on_agnes_free_toggle,
             )
             self.agnes_check.pack(side="left", padx=8)
+
+            utility_tools = ttk.Frame(self.advanced_panel, style="Advanced.TFrame")
+            utility_tools.pack(fill="x", pady=(8, 0))
+            self.diagnose_button = ttk.Button(
+                utility_tools,
+                command=self.refresh,
+                style="Link.TButton",
+            )
+            self.diagnose_button.pack(side="left")
+            self.demo_button = ttk.Button(
+                utility_tools,
+                command=self.create_demo,
+                style="Link.TButton",
+            )
+            self.demo_button.pack(side="left", padx=(6, 0))
+            self.refresh_resume_button = ttk.Button(
+                utility_tools,
+                command=self.refresh_resume,
+                style="Link.TButton",
+            )
+            self.refresh_resume_button.pack(side="left", padx=(6, 0))
 
             manual = ttk.Frame(self.advanced_panel, style="Advanced.TFrame")
             manual.pack(fill="x", pady=(8, 0))
@@ -374,14 +399,13 @@ def main(*, ui_self_test: bool = False) -> int:
             self.runtime_label.configure(text=self._tr("label.runtime"))
             self.agnes_check.configure(text=self._tr("checkbox.agnes_free"))
             self.start_button.configure(text=self._tr("button.start"))
+            self.task_hint_label.configure(text=self._tr("task.default"))
             self._update_toggle_labels()
 
             labels = self._runtime_labels()
             self.runtime_combo.configure(values=[labels["auto"], labels["agnes-free"], labels["hermes-local"]])
             self.runtime_var.set(labels[self.runtime_key])
 
-            if initial and not self.task.get("1.0", "end").strip():
-                self.task.insert("1.0", self._tr("task.default"))
             if initial:
                 self.resume_var.set(self._tr("resume.none_selected"))
                 self.status_var.set(self._tr("status.checking"))
@@ -395,17 +419,11 @@ def main(*, ui_self_test: bool = False) -> int:
             if new_language == self.language:
                 return
 
-            old_default = self._tr("task.default")
-            current_task = self.task.get("1.0", "end").strip()
             self.language = new_language
             try:
                 save_language(new_language)
             except OSError as exc:
                 self._append(str(exc))
-
-            if current_task == old_default:
-                self.task.delete("1.0", "end")
-                self.task.insert("1.0", self._tr("task.default"))
 
             self._apply_language()
             self._append(self._tr("language.changed", language=LANGUAGE_NAMES[self.language]))
@@ -585,6 +603,7 @@ def main(*, ui_self_test: bool = False) -> int:
             project = Path(self.project_var.get()).expanduser()
             self.resume_candidate = None
             self.resume_button.configure(state="disabled")
+            self.resume_row.pack_forget()
             if not project.is_dir():
                 self.resume_var.set(self._tr("resume.choose_project"))
                 return
@@ -602,6 +621,7 @@ def main(*, ui_self_test: bool = False) -> int:
                     next_action=item.next_action,
                 )
             )
+            self.resume_row.pack(fill="x", pady=(8, 0))
 
         def _creation_flags(self) -> int:
             return subprocess.CREATE_NEW_CONSOLE if os.name == "nt" else 0
@@ -1182,6 +1202,11 @@ def main(*, ui_self_test: bool = False) -> int:
             root.update_idletasks()
             assert not app.advanced_panel.winfo_ismapped()
             assert not app.details_panel.winfo_ismapped()
+            assert not app.diagnose_button.winfo_ismapped()
+            assert not app.demo_button.winfo_ismapped()
+            assert not app.resume_row.winfo_ismapped()
+            assert not app.task.get("1.0", "end").strip()
+            assert app.task_hint_label.cget("text") == translate(app.language, "task.default")
             root.geometry("820x680")
             root.update()
             visible_bottom = (
@@ -1224,6 +1249,7 @@ def main(*, ui_self_test: bool = False) -> int:
                 app2.refresh_resume()
                 root2.update_idletasks()
                 assert app2.resume_candidate is not None
+                assert app2.resume_row.winfo_ismapped()
                 assert str(app2.resume_button.cget("state")) == "disabled"
             root2.destroy()
             return 0
