@@ -85,29 +85,48 @@ def validate_stable_baseline(root: Path = ROOT, manifest_path: Path = MANIFEST) 
             f"package version drift: expected={runtime['version']} actual={project['version']}"
         )
 
-    failures.extend(
-        _check_files(root, runtime["files"], _actual_runtime_paths(root), "runtime")
-    )
-    public = baseline["public_surface"]
-    failures.extend(
-        _check_files(root, public["files"], _actual_public_paths(root), "public surface")
-    )
-
     state = json.loads((root / "PROJECT_STATE.json").read_text(encoding="utf-8"))
     contract = baseline["control_contract"]
     if state.get("current_release") != contract["current_release"]:
         failures.append("PROJECT_STATE current_release drift")
-    if state.get("status") != contract["status"]:
-        failures.append("PROJECT_STATE status drift")
-    if state.get("active_engineering_issue") is not None:
-        failures.append("stable baseline requires no active engineering issue")
-    if state.get("engineering_queue") != []:
-        failures.append("stable baseline requires an empty engineering queue")
+
     launch_control = state.get("launch_control", {})
-    if launch_control.get("product_baseline_frozen") is not True:
-        failures.append("stable baseline requires launch_control.product_baseline_frozen=true")
-    if launch_control.get("active_issue") != contract["launch_issue"]:
-        failures.append("launch issue drift from stable baseline contract")
+    frozen = (
+        state.get("status") == contract["status"]
+        and state.get("active_engineering_issue") is None
+        and state.get("engineering_queue") == []
+        and launch_control.get("product_baseline_frozen") is True
+    )
+
+    queue = state.get("engineering_queue")
+    active = state.get("active_engineering_issue")
+    engineering_transition = (
+        state.get("status") not in {"post-release", "released"}
+        and isinstance(active, int)
+        and isinstance(queue, list)
+        and bool(queue)
+        and queue[0] == active
+    )
+
+    if frozen:
+        failures.extend(
+            _check_files(root, runtime["files"], _actual_runtime_paths(root), "runtime")
+        )
+        public = baseline["public_surface"]
+        failures.extend(
+            _check_files(root, public["files"], _actual_public_paths(root), "public surface")
+        )
+        if launch_control.get("active_issue") != contract["launch_issue"]:
+            failures.append("launch issue drift from stable baseline contract")
+    elif engineering_transition:
+        # Product drift is allowed only after project control explicitly enters
+        # a scoped engineering state. PROJECT_STATE validation owns the rest of
+        # the engineering-state invariants.
+        pass
+    else:
+        failures.append(
+            "baseline is neither frozen post-release nor an explicit scoped engineering transition"
+        )
 
     return failures
 
