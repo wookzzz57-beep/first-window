@@ -14,6 +14,36 @@ jobs:
           python-version: "3.12"
       - name: Check project state
         run: python scripts/check_project_state.py
+      - name: Check stable product baseline
+        run: python scripts/check_stable_baseline.py
+      - name: Verify live v0.4.2 release identity
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          eval "$(python - <<'PY'
+          import json
+          b=json.load(open("STABLE_BASELINE.json", encoding="utf-8"))
+          r=b["runtime_release"]
+          print(f"TAG={r['tag']}")
+          print(f"TAG_SHA={r['tag_sha']}")
+          print(f"RELEASE_ID={r['release_id']}")
+          print(f"EXE_SIZE={r['exe']['size']}")
+          print(f"EXE_SHA256={r['exe']['sha256']}")
+          print(f"CHECKSUM_SIZE={r['checksum']['size']}")
+          print(f"CHECKSUM_SHA256={r['checksum']['sha256']}")
+          PY
+          )"
+          actual_tag_sha="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$TAG" --jq '.object.sha')"
+          test "$actual_tag_sha" = "$TAG_SHA"
+          test "$(gh api "repos/$GITHUB_REPOSITORY/releases/latest" --jq '.tag_name')" = "$TAG"
+          test "$(gh api "repos/$GITHUB_REPOSITORY/releases/latest" --jq '.id')" = "$RELEASE_ID"
+          test "$(gh api "repos/$GITHUB_REPOSITORY/releases/latest" --jq '.assets[] | select(.name=="FirstWindow-Windows-x64.exe") | .size')" = "$EXE_SIZE"
+          test "$(gh api "repos/$GITHUB_REPOSITORY/releases/latest" --jq '.assets[] | select(.name=="FirstWindow-Windows-x64.exe") | .digest')" = "sha256:$EXE_SHA256"
+          test "$(gh api "repos/$GITHUB_REPOSITORY/releases/latest" --jq '.assets[] | select(.name=="SHA256SUMS.txt") | .size')" = "$CHECKSUM_SIZE"
+          test "$(gh api "repos/$GITHUB_REPOSITORY/releases/latest" --jq '.assets[] | select(.name=="SHA256SUMS.txt") | .digest')" = "sha256:$CHECKSUM_SHA256"
+          echo "live v0.4.2 release identity verified"
       - name: Validate repository
         run: python scripts/validate.py
       - name: Compile Python
