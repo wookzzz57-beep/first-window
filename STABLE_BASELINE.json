@@ -1,0 +1,176 @@
+{
+  "schema_version": 1,
+  "project": "FirstWindow",
+  "baseline_id": "v0.4.2-stable",
+  "status": "stable-frozen",
+  "frozen_from_main_sha": "3aad3797691826f1e7f407c1084349e8bd6f6b9e",
+  "runtime_release": {
+    "version": "0.4.2",
+    "tag": "v0.4.2",
+    "tag_sha": "73454bb09cfaf4c43a3fcc1a77cd3d0e80375148",
+    "release_id": 392384670,
+    "exe": {
+      "name": "FirstWindow-Windows-x64.exe",
+      "asset_id": 576558156,
+      "size": 11636647,
+      "sha256": "953f5f260439976d46db4f6b81dd3a74afca83e006edd0d3daf0c24b538b11b0"
+    },
+    "checksum": {
+      "name": "SHA256SUMS.txt",
+      "asset_id": 576558161,
+      "size": 95,
+      "sha256": "adb5473f60d270dfea02ac9a613a46e415765e239ca034b69c8b4d01137ab2af"
+    },
+    "files": [
+      {
+        "path": "pyproject.toml",
+        "git_blob_sha": "214dee525a5c92fee734813c687f312229cc2738",
+        "size": 486
+      },
+      {
+        "path": "scripts/firstwindow_gui.py",
+        "git_blob_sha": "736e698e1abad00bee63479c74583f03bf7073b3",
+        "size": 2259
+      },
+      {
+        "path": "src/firstwindow/__init__.py",
+        "git_blob_sha": "82fad997765f6d64aad88e3899f7071d8a9b1e31",
+        "size": 86
+      },
+      {
+        "path": "src/firstwindow/bootstrap.py",
+        "git_blob_sha": "3bcb76dc850e8c63927d5bd5bef866bbd72c6414",
+        "size": 3504
+      },
+      {
+        "path": "src/firstwindow/cli.py",
+        "git_blob_sha": "fedf3e027cbc34ac415318b1d779de0432cbb9ad",
+        "size": 13955
+      },
+      {
+        "path": "src/firstwindow/demo_project.py",
+        "git_blob_sha": "2f9e1ee711e3fa0bc184ccb41a08244457676886",
+        "size": 1419
+      },
+      {
+        "path": "src/firstwindow/distribution.py",
+        "git_blob_sha": "c086eb0f6963c96082aa18ed7aa8063d4e285ba6",
+        "size": 1027
+      },
+      {
+        "path": "src/firstwindow/durable.py",
+        "git_blob_sha": "cf256bcba9276a1e2b143bcd990f7ed5343abf5d",
+        "size": 10313
+      },
+      {
+        "path": "src/firstwindow/gui.py",
+        "git_blob_sha": "7880acaab268dbbb3092fe086fc2262de0cc2dae",
+        "size": 57373
+      },
+      {
+        "path": "src/firstwindow/hermes_agnes.py",
+        "git_blob_sha": "273afab59baeeea522ed3fae024e67dee1d41576",
+        "size": 14120
+      },
+      {
+        "path": "src/firstwindow/i18n.py",
+        "git_blob_sha": "af98e78beae3f51f32547931438502475d5d2e9a",
+        "size": 21909
+      },
+      {
+        "path": "src/firstwindow/onboarding.py",
+        "git_blob_sha": "85846ca2f906b85dd1404f6c4b376064d9fecace",
+        "size": 583
+      },
+      {
+        "path": "src/firstwindow/readiness.py",
+        "git_blob_sha": "a46d1924aa8d998ccd60195ca93ec4915fd5b776",
+        "size": 6161
+      },
+      {
+        "path": "src/firstwindow/release_policy.py",
+        "git_blob_sha": "acfdc5d791a039f1fff8e2a42b6a90e13dc43763",
+        "size": 973
+      },
+      {
+        "path": "src/firstwindow/resume.py",
+        "git_blob_sha": "b474bba4ead596694266a5a2a5bf04c3e85b9e56",
+        "size": 5308
+      },
+      {
+        "path": "src/firstwindow/router.py",
+        "git_blob_sha": "c11b9d9519ce0892cdbc99c8b3c5c34a18afad94",
+        "size": 5022
+      },
+      {
+        "path": "src/firstwindow/runners.py",
+        "git_blob_sha": "dbad2236a4ae66517909348f95883996d686f104",
+        "size": 2858
+      },
+      {
+        "path": "src/firstwindow/system_status.py",
+        "git_blob_sha": "1acdd7a3e02fbb189428015797c093a111bfced0",
+        "size": 3679
+      },
+      {
+        "path": "src/firstwindow/windows_paths.py",
+        "git_blob_sha": "7fce7585ce42892ec987ee099d196069dd58e407",
+        "size": 1715
+      }
+    ]
+  },
+  "public_surface": {
+    "accepted_main_sha": "b5e68df320300abf27e9c18611673ba372717279",
+    "production_url": "https://firstwindow-public.vercel.app",
+    "production_deployment_id": "dpl_G7TPV8JNzKspE1aoBjMm6w8jPcaW",
+    "external_verify_run": 35504289632,
+    "real_capture_png_sha256": "f626958a1d5b3adcf57ef9cd7fec7de4d45ec019bd05eaebb0b2a77bd9f2a6fe",
+    "real_capture_gif_sha256": "0b80461859241ef346386e740b5f0c385038911e3648be018d7997be8885a547",
+    "files": [
+      {
+        "path": "README.md",
+        "git_blob_sha": "ec1605f9d46235d704155460b611f349c1579094",
+        "size": 9641
+      },
+      {
+        "path": "docs/assets/firstwindow-startup.gif",
+        "git_blob_sha": "673932fcd07779b3a6a3994673aa614e7c6c75b0",
+        "size": 148790
+      },
+      {
+        "path": "docs/assets/firstwindow-window.png",
+        "git_blob_sha": "6ac5c5ff1a02087609ed3ab3e1ecbe8836919a0b",
+        "size": 101274
+      },
+      {
+        "path": "site/app.js",
+        "git_blob_sha": "bfe8cefaf9f118dc0905cb48df1b4504041f4ca8",
+        "size": 877
+      },
+      {
+        "path": "site/index.html",
+        "git_blob_sha": "48649cbaa01369f2abe5902a1f00861fcbda1546",
+        "size": 6995
+      },
+      {
+        "path": "site/styles.css",
+        "git_blob_sha": "fc6a242e6733a2ac02357d8e6ada0edda342ce35",
+        "size": 5233
+      },
+      {
+        "path": "vercel.json",
+        "git_blob_sha": "3b0c07fe7670a858dce2e3d44b7c41743b9bd2be",
+        "size": 183
+      }
+    ]
+  },
+  "control_contract": {
+    "current_release": "v0.4.2",
+    "status": "post-release",
+    "product_baseline_frozen": true,
+    "active_engineering_issue": null,
+    "engineering_queue": [],
+    "launch_issue": 17,
+    "mutation_rule": "Any intentional runtime or public-surface change must be promoted as scoped engineering, pass acceptance, and establish a new accepted baseline before this manifest is updated."
+  }
+}

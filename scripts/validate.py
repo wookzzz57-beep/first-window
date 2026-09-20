@@ -4,12 +4,12 @@ from check_project_state import load_project_state, validate_project_state
 
 
 REQUIRED = [
-    "README.md","LICENSE","AGENTS.md","PROJECT_STATE.json","pyproject.toml",
+    "README.md","LICENSE","AGENTS.md","PROJECT_STATE.json","STABLE_BASELINE.json","pyproject.toml",
     "docs/EXECUTION_CONTROL.md","docs/DURABLE_STATE.md",
     "src/firstwindow/cli.py","src/firstwindow/gui.py","src/firstwindow/router.py",
     "src/firstwindow/durable.py","src/firstwindow/runners.py","src/firstwindow/bootstrap.py",
     "src/firstwindow/system_status.py","src/firstwindow/hermes_agnes.py","src/firstwindow/onboarding.py","src/firstwindow/i18n.py","src/firstwindow/readiness.py","src/firstwindow/demo_project.py","src/firstwindow/windows_paths.py","src/firstwindow/resume.py","src/firstwindow/distribution.py","src/firstwindow/release_policy.py",
-    "scripts/check_project_state.py","scripts/firstwindow_gui.py","site/index.html","site/app.js","site/styles.css",
+    "scripts/check_project_state.py","scripts/check_stable_baseline.py","scripts/firstwindow_gui.py","docs/STABLE_BASELINE.md","site/index.html","site/app.js","site/styles.css",
     ".github/workflows/ci.yml",".github/workflows/windows-build.yml",
 ]
 
