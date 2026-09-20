@@ -2,7 +2,7 @@
 
 <p align="center">
   <strong>Your first coding agent for Windows.</strong><br>
-  One window. Hermes execution. A fail-closed $0 path. Durable resume. Evidence before “done”.
+  Three steps: get ready → pick a folder → describe the task.
 </p>
 
 <p align="center">
@@ -22,17 +22,19 @@
   <a href="https://github.com/wookzzz57-beep/first-window/releases/latest">Release Notes</a>
 </p>
 
-FirstWindow is a beginner-first Windows launcher for coding agents. It keeps the user-facing workflow small while putting **Hermes Agent** underneath as the executor.
+FirstWindow is a beginner-first Windows launcher for coding agents. The default screen is deliberately small: **get ready, choose a project folder, describe the task, Start**. Provider/runtime details stay under Advanced setup unless you need them.
 
-The verified cloud path is:
+## Start in 3 steps
 
-```text
-FirstWindow
-  └─ Hermes Agent
-       └─ Agnes API
-```
+1. Download and open **[FirstWindow-Windows-x64.exe](https://github.com/wookzzz57-beep/first-window/releases/latest/download/FirstWindow-Windows-x64.exe)**.
+2. Press **Make Me Ready / 一键就绪**. FirstWindow checks the setup and runs a real readiness probe before Start is enabled.
+3. Choose your project folder, describe what you want in plain language, and press **Start / 开始**.
 
-A ready **Hermes Managed Local** model can be used as the local lane. If no verified free/local route is ready, FirstWindow **blocks instead of silently falling back to paid or unknown-cost inference**.
+No terminal is required for the normal Windows flow. If an interrupted task is found, FirstWindow can offer **Continue / 继续** after the exact execution route is verified again.
+
+The community EXE is currently **unsigned**, so Windows SmartScreen may show an unknown-publisher warning. For integrity verification, compare the EXE with **[SHA256SUMS.txt](https://github.com/wookzzz57-beep/first-window/releases/latest/download/SHA256SUMS.txt)**.
+
+Under the simple surface, **Hermes Agent** remains the executor. **Agnes API** can be the cloud provider lane and a ready **Hermes Managed Local** model can be the local lane. If no verified free/local route is ready, FirstWindow **blocks instead of silently falling back to paid or unknown-cost inference**.
 
 > Direct Agnes CLI is not required for the beginner path. It remains an explicit advanced/manual option.
 
@@ -56,16 +58,7 @@ FirstWindow concentrates those concerns into one guarded workflow:
 | “I do not want my other provider keys leaking into this setup.” | **Isolated Hermes profile** with explicit credential boundaries. |
 | “I just want to start from Windows.” | **GUI-first beginner flow** with English / 简体中文 switching. |
 
-## Start in a few steps
-
-1. Download **[FirstWindow-Windows-x64.exe](https://github.com/wookzzz57-beep/first-window/releases/latest/download/FirstWindow-Windows-x64.exe)** and **[SHA256SUMS.txt](https://github.com/wookzzz57-beep/first-window/releases/latest/download/SHA256SUMS.txt)**.
-2. Open FirstWindow and choose **English** or **简体中文**.
-3. Press **Make Me Ready / 一键就绪**. FirstWindow verifies the exact route before Start/Resume is enabled.
-4. Choose a project folder, describe the task, and press **Start Building**.
-
-The community EXE is currently **unsigned**, so Windows SmartScreen may show an unknown-publisher warning. Verify the downloaded EXE against `SHA256SUMS.txt`.
-
-Full setup details: **[Beginner Guide](docs/BEGINNER.md)**.
+Full setup details and troubleshooting: **[Beginner Guide](docs/BEGINNER.md)**.
 
 ## What is verified in v0.4.1
 

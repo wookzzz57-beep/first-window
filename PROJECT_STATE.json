@@ -1,13 +1,15 @@
 {
   "schema_version": 1,
   "project": "FirstWindow",
-  "phase": "v0.4.1-post-release-launch",
-  "status": "post-release",
+  "phase": "v0.4.2-beginner-ux",
+  "status": "active",
   "canonical_branch": "main",
   "current_release": "v0.4.1",
-  "primary_objective": "Operate the post-release launch evidence loop from the verified v0.4.1 baseline; keep product engineering frozen unless real-user evidence promotes one scoped issue.",
-  "active_engineering_issue": null,
-  "engineering_queue": [],
+  "primary_objective": "Implement issue #34: simplify FirstWindow into a beginner-first 3-step UX while preserving the verified v0.4.1 runtime and safety semantics.",
+  "active_engineering_issue": 34,
+  "engineering_queue": [
+    34
+  ],
   "completed_engineering_issues": [
     4,
     5,
@@ -31,7 +33,7 @@
       "id": "EXP-001",
       "issue": 17,
       "channel": "Hacker News / Show HN",
-      "status": "ready-for-reconciliation-or-publish",
+      "status": "paused-for-engineering-issue-34",
       "published_url": null,
       "product_baseline_frozen": true,
       "engineering_wip": 0,
@@ -40,7 +42,7 @@
   },
   "control_board_issue": 8,
   "wip_limit": 1,
-  "resume_point": "Issue #25 is accepted. Production firstwindow-public is verified on v0.4.1 with Hermes Agent / Agnes API copy, correct router demo, latest EXE download, and no v0.3.0 residue. Engineering WIP is zero. Resume issue #17 / EXP-001 with reconciliation-first handling for any already-published Show HN item.",
+  "resume_point": "Issue #34 implementation is accepted on PR #35: local 113/113 tests pass, source GUI self-test passes at 820x680, CI #203 succeeded, and Windows App #87 succeeded including packaged self-test and packaged bilingual UI self-test. Next action is merge PR #35. Do not publish a v0.4.2 release or replace public real-capture assets until that release work is separately scoped and verified. Launch EXP-001 remains paused until engineering closure.",
   "last_verified_main_sha": "38a489cc929cf109c8fe17df6a7803d5ab715d24",
   "evidence": {
     "main_linux_ci_run": 35438404706,
@@ -390,6 +392,24 @@
       "latest_exe_head_http": 200,
       "latest_exe_content_length": 11631665,
       "verification_device": "LAPTOP-RF3RT9HP"
+    },
+    "issue_34": {
+      "status": "pr-verified-ready-to-merge",
+      "branch": "ux-beginner-simplify-20260920",
+      "pr": 35,
+      "implementation_commit": "0c19f60c96ab7500e408bb62dad38081c4ff9ea4",
+      "local_unit_tests": "113/113 pass",
+      "local_source_ui_self_test": "pass including 820x680 and collapsed/expanded panels",
+      "pr_ci_run": 35502058034,
+      "pr_ci": "success",
+      "pr_windows_run": 35502058049,
+      "pr_windows": "success",
+      "packaged_self_test": "success",
+      "packaged_ui_self_test": "success",
+      "artifact_id": 10601924314,
+      "artifact_digest": "sha256:aa6648283c9c77fc9537bcb66570f6a635207be35a5d240f60b2f992eb433745",
+      "artifact_bytes": 11369903,
+      "core_runtime_files_changed": false
     }
   },
   "external_blockers": [],
