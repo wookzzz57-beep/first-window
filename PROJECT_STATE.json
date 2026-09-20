@@ -44,7 +44,7 @@
   "control_board_issue": 8,
   "wip_limit": 1,
   "resume_point": "v0.4.2 release engineering and production acceptance are complete. Product baseline is frozen at v0.4.2. Resume issue #17 with EXP-002 aggregate observation through 2026-09-21 12:40 +08:00; record net star/download/direct-feedback deltas without per-channel attribution. After that window, TikTok scheduled for 2026-09-21 18:00 Asia/Shanghai is the next single channel; read back its public result before activating any second variant or channel.",
-  "last_verified_main_sha": "bd07abdad5e8f14ec03dadd7a11ef3a7220b13df",
+  "last_verified_main_sha": "b40380cffe3584b59b1c2fee978b4cc9b9759037",
   "evidence": {
     "main_linux_ci_run": 35438404706,
     "main_linux_ci": "success",
@@ -481,7 +481,7 @@
       "release_engineering_closed": true
     },
     "issue_40": {
-      "status": "protection-enabled-closure-pr-pending",
+      "status": "accepted",
       "issue": 40,
       "guard_pr": 41,
       "guard_pr_head": "84da81236b29cf32883c898816f6bb5c85a7ca81",
@@ -503,7 +503,19 @@
       "branch_protection_enforce_admins": true,
       "branch_protection_allow_force_pushes": false,
       "branch_protection_allow_deletions": false,
-      "runtime_or_public_files_changed": false
+      "runtime_or_public_files_changed": false,
+      "closure_pr": 42,
+      "closure_pr_head": "864442fb3b514adb2d51e2f2f623326dddc82e2f",
+      "closure_pr_ci_run": 35505240522,
+      "closure_pr_ci": "success",
+      "closure_pr_windows_run": 35505240510,
+      "closure_pr_windows": "success",
+      "closure_merge_sha": "b40380cffe3584b59b1c2fee978b4cc9b9759037",
+      "closure_main_ci_run": 35505327548,
+      "closure_main_ci": "success",
+      "closure_main_windows_run": 35505327518,
+      "closure_main_windows": "success",
+      "branch_protection_verified_on_protected_pr": true
     }
   },
   "external_blockers": [],
