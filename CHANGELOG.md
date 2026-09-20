@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.2 — Three-Step Beginner UX
+
+- Reduce the default Windows flow to three visible steps: get ready, pick a project folder, and describe the task.
+- Move runtime selection, manual provider setup, CLI fallbacks, demo creation, diagnostics, and technical logs out of the default path.
+- Show Resume only when an interrupted durable task actually exists.
+- Replace the prefilled example task with a non-executable hint so a beginner cannot accidentally run the sample text.
+- Improve spacing, visual hierarchy, button emphasis, and concise English / Simplified Chinese copy.
+- Preserve the verified fail-closed $0 guard, Hermes-first execution, credential boundaries, live readiness gate, durable resume, and evidence acceptance semantics.
+
 ## 0.4.1 — Readiness Truth & Release Surface Hardening
 
 - Bind Agnes live-route proof to the currently present API credential and invalidate stale proof when the key disappears or changes.
