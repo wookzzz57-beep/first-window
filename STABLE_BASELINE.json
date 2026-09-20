@@ -120,7 +120,7 @@
     ]
   },
   "public_surface": {
-    "accepted_main_sha": "b5e68df320300abf27e9c18611673ba372717279",
+    "accepted_main_sha": "629a846ea5d13f0fc83a568c8d6cda318883a9a4",
     "production_url": "https://firstwindow-public.vercel.app",
     "production_deployment_id": "dpl_G7TPV8JNzKspE1aoBjMm6w8jPcaW",
     "external_verify_run": 35504289632,
@@ -129,8 +129,8 @@
     "files": [
       {
         "path": "README.md",
-        "git_blob_sha": "ec1605f9d46235d704155460b611f349c1579094",
-        "size": 9641
+        "git_blob_sha": "16bd8392fd8d0098b53076951a191be23bf2d0cb",
+        "size": 9587
       },
       {
         "path": "docs/assets/firstwindow-startup.gif",
@@ -149,8 +149,8 @@
       },
       {
         "path": "site/index.html",
-        "git_blob_sha": "48649cbaa01369f2abe5902a1f00861fcbda1546",
-        "size": 6995
+        "git_blob_sha": "82a9eb63d3a5777e8d7ab1330e5c68105165782d",
+        "size": 6727
       },
       {
         "path": "site/styles.css",
