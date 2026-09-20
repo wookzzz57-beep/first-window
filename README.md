@@ -40,7 +40,7 @@ Under the simple surface, **Hermes Agent** remains the executor. **Agnes API** c
 
 ## See it running
 
-This is a real capture of the **v0.4.1 Windows app**, including live **English ↔ 简体中文** switching. It is not a generated mockup.
+This is a real capture of the **v0.4.2 Windows app**, showing both **English** and **简体中文** from the packaged release EXE. It is not a generated mockup.
 
 ![FirstWindow real Windows bilingual demo](docs/assets/firstwindow-startup.gif)
 
@@ -60,7 +60,7 @@ FirstWindow concentrates those concerns into one guarded workflow:
 
 Full setup details and troubleshooting: **[Beginner Guide](docs/BEGINNER.md)**.
 
-## What is verified in v0.4.1
+## What is verified in v0.4.2
 
 The current released baseline has been checked beyond “the build succeeded”:
 
