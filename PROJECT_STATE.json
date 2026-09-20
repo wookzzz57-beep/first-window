@@ -1,15 +1,13 @@
 {
   "schema_version": 1,
   "project": "FirstWindow",
-  "phase": "v0.4.2-release",
-  "status": "active",
+  "phase": "v0.4.2-post-release",
+  "status": "post-release",
   "canonical_branch": "main",
   "current_release": "v0.4.2",
-  "primary_objective": "Implement issue #36: final beginner polish, ship verified v0.4.2, capture the real release EXE, replace public visuals, and then resume launch.",
-  "active_engineering_issue": 36,
-  "engineering_queue": [
-    36
-  ],
+  "primary_objective": "Resume issue #17 post-release distribution on the verified v0.4.2 baseline; finish the active aggregate observation window before the next single-channel experiment.",
+  "active_engineering_issue": null,
+  "engineering_queue": [],
   "completed_engineering_issues": [
     4,
     5,
@@ -18,7 +16,8 @@
     19,
     22,
     25,
-    34
+    34,
+    36
   ],
   "launch_track": [
     17
@@ -31,20 +30,21 @@
     "target_stars": 10,
     "success_alternative": "enough real-user evidence to identify the dominant blocking funnel step",
     "active_experiment": {
-      "id": "EXP-001",
+      "id": "EXP-002",
       "issue": 17,
-      "channel": "Hacker News / Show HN",
-      "status": "paused-for-release-issue-36",
+      "channel": "Aggregate observation window",
+      "status": "active-observation",
       "published_url": null,
       "product_baseline_frozen": true,
-      "engineering_wip": 1,
-      "next_action": "Reconcile any already-published Show HN item URL/time into issue #17; if none exists, publish only EXP-001. Do not open a second channel before recording its result/decision."
+      "engineering_wip": 0,
+      "window_end": "2026-09-21T12:40:00+08:00",
+      "next_action": "At 2026-09-21 12:40 +08:00, record aggregate net stars, v0.4.2 release download/checksum deltas, and direct feedback. Do not infer per-channel attribution. Then allow the already-scheduled TikTok post at 2026-09-21 18:00 Asia/Shanghai as the next single active channel and read back its result before any second variant/channel."
     }
   },
   "control_board_issue": 8,
   "wip_limit": 1,
-  "resume_point": "Issue #36: v0.4.2 is formally released and the downloaded release EXE is independently checksum/self-test/UI-self-test verified on LAPTOP-RF3RT9HP. Real English/zh-CN window-only PNG/GIF assets are ready. Next: merge the public-truth asset PR, verify production shows v0.4.2 and the new capture, then close release engineering and resume issue #17 / EXP-001.",
-  "last_verified_main_sha": "73454bb09cfaf4c43a3fcc1a77cd3d0e80375148",
+  "resume_point": "v0.4.2 release engineering and production acceptance are complete. Product baseline is frozen at v0.4.2. Resume issue #17 with EXP-002 aggregate observation through 2026-09-21 12:40 +08:00; record net star/download/direct-feedback deltas without per-channel attribution. After that window, TikTok scheduled for 2026-09-21 18:00 Asia/Shanghai is the next single channel; read back its public result before activating any second variant or channel.",
+  "last_verified_main_sha": "b5e68df320300abf27e9c18611673ba372717279",
   "evidence": {
     "main_linux_ci_run": 35438404706,
     "main_linux_ci": "success",
@@ -395,7 +395,7 @@
       "verification_device": "LAPTOP-RF3RT9HP"
     },
     "issue_34": {
-      "status": "pr-verified-ready-to-merge",
+      "status": "merged-and-released-in-v0.4.2",
       "branch": "ux-beginner-simplify-20260920",
       "pr": 35,
       "implementation_commit": "0c19f60c96ab7500e408bb62dad38081c4ff9ea4",
@@ -410,10 +410,11 @@
       "artifact_id": 10601924314,
       "artifact_digest": "sha256:aa6648283c9c77fc9537bcb66570f6a635207be35a5d240f60b2f992eb433745",
       "artifact_bytes": 11369903,
-      "core_runtime_files_changed": false
+      "core_runtime_files_changed": false,
+      "merge_sha": "4578271c67a6b0001c9922562f4fecce8118bda6"
     },
     "issue_36": {
-      "status": "release-and-real-capture-verified-public-surface-pending",
+      "status": "production-accepted",
       "issue": 36,
       "prerelease_pr": 37,
       "prerelease_pr_head": "3772b63cf48f3d68b71207645fab7dc9016e48f1",
@@ -454,7 +455,30 @@
         "bytes": 148790,
         "source": "two real packaged v0.4.2 window states: English and zh-CN; no generated mockup"
       },
-      "core_runtime_files_changed": false
+      "core_runtime_files_changed": false,
+      "public_surface_pr": 38,
+      "public_surface_head_sha": "6681bd4be72f16a0b3348660073cd0f74dc9e346",
+      "public_surface_merge_sha": "b5e68df320300abf27e9c18611673ba372717279",
+      "public_surface_pr_ci_run": 35503888823,
+      "public_surface_pr_ci": "success",
+      "public_surface_pr_windows_run": 35503888812,
+      "public_surface_pr_windows": "success",
+      "public_surface_main_ci_run": 35503968067,
+      "public_surface_main_ci": "success",
+      "public_surface_main_windows_run": 35503968016,
+      "public_surface_main_windows": "success",
+      "production_deployment_id": "dpl_G7TPV8JNzKspE1aoBjMm6w8jPcaW",
+      "production_deployment_url": "https://firstwindow-public-mev58a3pu-progress00116.vercel.app",
+      "production_alias": "https://firstwindow-public.vercel.app",
+      "production_status": "ready",
+      "production_external_verify_run": 35504289632,
+      "production_external_verify": "success",
+      "production_canonical_http_200": true,
+      "production_v0_4_2_copy": true,
+      "production_old_v0_4_1_footer_absent": true,
+      "production_real_capture_sha256_verified": true,
+      "production_latest_exe_sha256_verified": true,
+      "release_engineering_closed": true
     }
   },
   "external_blockers": [],
