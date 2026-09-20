@@ -445,15 +445,15 @@
       "capture_scope": "FirstWindow application window only; no unrelated desktop/app content",
       "real_capture_png": {
         "path": "docs/assets/firstwindow-window.png",
-        "sha256": "f626958a1d5b3adcf57ef9cd7fec7de4d45ec019bd05eaebb0b2a77bd9f2a6fe",
-        "bytes": 101274,
-        "source": "downloaded v0.4.2 release EXE"
+        "sha256": "02a54467d2208a05a0dfe6b5a60fc68cc25620b491c01bbdd50a73915979e3b5",
+        "bytes": 74103,
+        "source": "first frame captured from the downloaded v0.4.2 release EXE; FirstWindow application window only"
       },
       "real_capture_gif": {
         "path": "docs/assets/firstwindow-startup.gif",
-        "sha256": "0b80461859241ef346386e740b5f0c385038911e3648be018d7997be8885a547",
-        "bytes": 148790,
-        "source": "two real packaged v0.4.2 window states: English and zh-CN; no generated mockup"
+        "sha256": "a973fce2b6bef560b7e4c90b0e0b8955abd56a97467cf2c5315e12b3118daac1",
+        "bytes": 526946,
+        "source": "real packaged v0.4.2 window walkthrough: English / zh-CN switch, safe demo-project path, and task entry; no generated mockup"
       },
       "core_runtime_files_changed": false,
       "public_surface_pr": 38,
