@@ -41,6 +41,14 @@ No terminal is required for the normal Windows flow. If an interrupted task is f
   <strong>Simple surface. Guarded execution. Verifiable completion.</strong>
 </p>
 
+### Real Windows walkthrough
+
+<p align="center">
+  <img src="docs/assets/firstwindow-startup.gif?v=real-v042-20260920" alt="Real FirstWindow v0.4.2 Windows walkthrough" width="880">
+</p>
+
+<p align="center"><sub>Captured from the packaged v0.4.2 Windows EXE: switch English / 简体中文, choose a safe demo project, and enter a task. Window-only capture; no generated mock UI.</sub></p>
+
 ## What makes FirstWindow different
 
 | Beginner problem | FirstWindow behavior |
@@ -64,12 +72,6 @@ The current **v0.4.2 Windows app** is the stable product baseline.
 - Independent acceptance gate: agent exit 0 does **not** automatically mean VERIFIED
 
 > The community EXE is currently **unsigned**, so Windows SmartScreen may show an unknown-publisher warning. Verify the download against [SHA256SUMS.txt](https://github.com/wookzzz57-beep/first-window/releases/latest/download/SHA256SUMS.txt).
-
-### Product preview policy
-
-Only captures that match the released Windows build should appear on the project front page. The previous embedded recording has been removed from the README while the public capture is being re-verified, so the landing page cannot show a misleading or outdated UI.
-
-The release itself remains available here: **[Download FirstWindow for Windows](https://github.com/wookzzz57-beep/first-window/releases/latest/download/FirstWindow-Windows-x64.exe)**.
 
 ## Under the simple surface
 
