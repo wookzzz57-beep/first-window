@@ -1,7 +1,7 @@
 from pathlib import Path
 import unittest
 
-from check_stable_baseline import validate_stable_baseline
+from scripts.check_stable_baseline import validate_stable_baseline
 
 
 class StableBaselineTests(unittest.TestCase):
