@@ -28,19 +28,43 @@
     "target_stars": 10,
     "success_alternative": "enough real-user evidence to identify the dominant blocking funnel step",
     "active_experiment": {
-      "id": "EXP-001",
+      "id": "EXP-002",
       "issue": 17,
-      "channel": "Hacker News / Show HN",
-      "status": "ready-for-reconciliation-or-publish",
-      "published_url": null,
+      "channel": "recovery observation: X + Bilibili + Xiaohongshu (confounded)",
+      "status": "observation-only",
       "product_baseline_frozen": true,
       "engineering_wip": 0,
-      "next_action": "Reconcile any already-published Show HN item URL/time into issue #17; if none exists, publish only EXP-001. Do not open a second channel before recording its result/decision."
-    }
+      "baseline_stars": 1,
+      "baseline_release_exe_downloads": 7,
+      "baseline_checksum_downloads": 3,
+      "window_start": "2026-09-20T12:40:00+08:00",
+      "window_end": "2026-09-21T12:40:00+08:00",
+      "attribution": "confounded; aggregate signals only",
+      "published_evidence": {
+        "x": "published; exact post URL not captured",
+        "bilibili": "https://www.bilibili.com/opus/1249850433937080328",
+        "xiaohongshu_note_id": "6aaf63a10000000026038dac",
+        "xiaohongshu_published_time": "2026-09-20 12:40 +08:00"
+      },
+      "primary_signal": "net GitHub stars, v0.4.1 EXE downloads, checksum downloads, and direct real-user feedback",
+      "stop_rule": "Do not publish another external channel during this observation window. Pause immediately for any P0/P1 trust, security, cost, download, startup, or integrity issue.",
+      "next_action": "At window close, record stars/download deltas and direct feedback, then choose exactly one next channel experiment."
+    },
+    "deferred_experiments": [
+      {
+        "id": "EXP-001",
+        "issue": 17,
+        "channel": "Hacker News / Show HN",
+        "status": "deferred-not-published",
+        "published_url": null,
+        "decision": "Do not create a promotion-only/new HN account. Show HN is currently temporarily restricted for newcomers and the available browser state does not contain an established valid HN account.",
+        "resume_condition": "Reconsider only after an established human HN account has normal community participation and current Show HN rules permit the submission."
+      }
+    ]
   },
   "control_board_issue": 8,
   "wip_limit": 1,
-  "resume_point": "Issue #25 is accepted. Production firstwindow-public is verified on v0.4.1 with Hermes Agent / Agnes API copy, correct router demo, latest EXE download, and no v0.3.0 residue. Engineering WIP is zero. Resume issue #17 / EXP-001 with reconciliation-first handling for any already-published Show HN item.",
+  "resume_point": "Launch reconciliation active. EXP-001 / Hacker News was deferred without publication. X, Bilibili, and Xiaohongshu distribution already occurred before the single-experiment gate was reconciled, so attribution is confounded. EXP-002 is observation-only through 2026-09-21T12:40:00+08:00: publish no additional external channels; collect net GitHub stars, v0.4.1 EXE/checksum download deltas, and direct real-user feedback. Product engineering remains frozen. At window close, record evidence and choose exactly one next channel experiment.",
   "last_verified_main_sha": "38a489cc929cf109c8fe17df6a7803d5ab715d24",
   "evidence": {
     "main_linux_ci_run": 35438404706,
@@ -390,9 +414,30 @@
       "latest_exe_head_http": 200,
       "latest_exe_content_length": 11631665,
       "verification_device": "LAPTOP-RF3RT9HP"
+    },
+    "launch_reconciliation_2026_09_20": {
+      "governance_drift": "Multiple external channels were published before EXP-001 had a recorded decision; per LAUNCH_CONTROL.md, attribution is confounded and new distribution is paused.",
+      "hn_exp_001": "deferred-not-published",
+      "x": "published; exact post URL not captured",
+      "bilibili_url": "https://www.bilibili.com/opus/1249850433937080328",
+      "xiaohongshu_note_id": "6aaf63a10000000026038dac",
+      "xiaohongshu_published_time": "2026-09-20 12:40 +08:00",
+      "recovery_window_start": "2026-09-20T12:40:00+08:00",
+      "recovery_window_end": "2026-09-21T12:40:00+08:00",
+      "baseline_stars": 1,
+      "baseline_release_exe_downloads": 7,
+      "baseline_checksum_downloads": 3,
+      "attribution": "aggregate-only; per-channel effects cannot be separated"
     }
   },
-  "external_blockers": [],
+  "external_blockers": [
+    "Product Hunt onboarding: profile GraphQL request returned HTTP 403 and Skip for now returned a Product Hunt internal error; do not retry or bypass.",
+    "Hacker News EXP-001: deferred without publication; current Show HN newcomer restriction/community-fit gate and no established valid HN account.",
+    "LinkedIn: login required.",
+    "Reddit: logged-in page loads CAPTCHA; no CAPTCHA bypass or browser-scripted posting.",
+    "Metricool: connected brand has no social networks bound.",
+    "TikTok/Douyin: no approved posting integration is connected; do not use browser scripting to automate publication."
+  ],
   "metadata_notes": [
     "Canonical repository is wookzzz57-beep/first-window.",
     "Repository description is updated.",
