@@ -53,7 +53,11 @@ def main(*, ui_self_test: bool = False) -> int:
             self.confirmed_agnes_key_fingerprint: str | None = None
             self.status_var = tk.StringVar()
             self.next_var = tk.StringVar()
+            self.main_status_var = tk.StringVar()
+            self.main_hint_var = tk.StringVar()
             self.resume_var = tk.StringVar()
+            self.advanced_visible = False
+            self.details_visible = False
 
             self.events: queue.Queue[tuple[str, object]] = queue.Queue()
             self.resume_candidate = None
@@ -81,15 +85,34 @@ def main(*, ui_self_test: bool = False) -> int:
             except tk.TclError:
                 pass
 
-            self.outer = ttk.Frame(self.root, padding=22)
+            self.root.configure(background="#f4f6f9")
+            style.configure("App.TFrame", background="#f4f6f9")
+            style.configure("Card.TLabelframe", background="#ffffff", bordercolor="#dfe4ec", relief="solid")
+            style.configure(
+                "Card.TLabelframe.Label",
+                background="#f4f6f9",
+                foreground="#162033",
+                font=("Segoe UI", 11, "bold"),
+            )
+            style.configure("Header.TLabel", background="#f4f6f9", foreground="#111827", font=("Segoe UI", 24, "bold"))
+            style.configure("Subtitle.TLabel", background="#f4f6f9", foreground="#667085", font=("Segoe UI", 10))
+            style.configure("Status.TLabel", background="#ffffff", foreground="#111827", font=("Segoe UI", 14, "bold"))
+            style.configure("Hint.TLabel", background="#ffffff", foreground="#667085", font=("Segoe UI", 10))
+            style.configure("Muted.TLabel", background="#ffffff", foreground="#667085", font=("Segoe UI", 9))
+            style.configure("Primary.TButton", font=("Segoe UI", 10, "bold"), padding=(18, 10))
+            style.configure("Secondary.TButton", font=("Segoe UI", 9), padding=(12, 8))
+            style.configure("Link.TButton", font=("Segoe UI", 9), padding=(8, 6))
+            style.configure("Advanced.TFrame", background="#ffffff")
+
+            self.outer = ttk.Frame(self.root, padding=(24, 18), style="App.TFrame")
             self.outer.pack(fill="both", expand=True)
 
-            header = ttk.Frame(self.outer)
+            header = ttk.Frame(self.outer, style="App.TFrame")
             header.pack(fill="x")
-            ttk.Label(header, text="FirstWindow", font=("Segoe UI", 22, "bold")).pack(side="left", anchor="w")
-            language_box = ttk.Frame(header)
+            ttk.Label(header, text="FirstWindow", style="Header.TLabel").pack(side="left", anchor="w")
+            language_box = ttk.Frame(header, style="App.TFrame")
             language_box.pack(side="right", anchor="e")
-            self.language_label = ttk.Label(language_box)
+            self.language_label = ttk.Label(language_box, style="Subtitle.TLabel")
             self.language_label.pack(side="left", padx=(0, 6))
             self.language_combo = ttk.Combobox(
                 language_box,
@@ -101,74 +124,121 @@ def main(*, ui_self_test: bool = False) -> int:
             self.language_combo.pack(side="left")
             self.language_combo.bind("<<ComboboxSelected>>", self._on_language_change)
 
-            self.subtitle_label = ttk.Label(self.outer, font=("Segoe UI", 11))
-            self.subtitle_label.pack(anchor="w", pady=(2, 18))
+            self.subtitle_label = ttk.Label(self.outer, style="Subtitle.TLabel")
+            self.subtitle_label.pack(anchor="w", pady=(2, 14))
 
-            self.status_box = ttk.LabelFrame(self.outer, padding=14)
+            self.status_box = ttk.LabelFrame(self.outer, padding=16, style="Card.TLabelframe")
             self.status_box.pack(fill="x")
-            ttk.Label(self.status_box, textvariable=self.status_var, justify="left").pack(anchor="w")
-            ttk.Label(self.status_box, textvariable=self.next_var, justify="left", wraplength=860).pack(
-                anchor="w", pady=(6, 0)
+            status_row = ttk.Frame(self.status_box, style="Advanced.TFrame")
+            status_row.pack(fill="x")
+            status_copy = ttk.Frame(status_row, style="Advanced.TFrame")
+            status_copy.pack(side="left", fill="x", expand=True)
+            ttk.Label(status_copy, textvariable=self.main_status_var, style="Status.TLabel").pack(anchor="w")
+            ttk.Label(
+                status_copy,
+                textvariable=self.main_hint_var,
+                style="Hint.TLabel",
+                justify="left",
+                wraplength=600,
+            ).pack(anchor="w", pady=(4, 0))
+            status_actions = ttk.Frame(status_row, style="Advanced.TFrame")
+            status_actions.pack(side="right", padx=(14, 0))
+            self.one_click_button = ttk.Button(
+                status_actions,
+                command=self.setup_zero_path,
+                style="Primary.TButton",
             )
-
-            buttons = ttk.Frame(self.status_box)
-            buttons.pack(fill="x", pady=(12, 0))
-            self.diagnose_button = ttk.Button(buttons, command=self.refresh)
-            self.diagnose_button.pack(side="left")
-            self.one_click_button = ttk.Button(buttons, command=self.setup_zero_path)
-            self.one_click_button.pack(side="left", padx=8)
-            self.hermes_local_button = ttk.Button(buttons, command=self.open_hermes)
-            self.hermes_local_button.pack(side="left")
-
-            manual = ttk.Frame(self.status_box)
-            manual.pack(fill="x", pady=(8, 0))
-            self.agnes_desktop_button = ttk.Button(
-                manual, command=lambda: self.open_beginner_setup("agnes")
+            self.one_click_button.pack(side="left")
+            self.diagnose_button = ttk.Button(
+                status_actions,
+                command=self.refresh,
+                style="Secondary.TButton",
             )
-            self.agnes_desktop_button.pack(side="left")
-            self.hermes_desktop_button = ttk.Button(
-                manual, command=lambda: self.open_beginner_setup("hermes")
-            )
-            self.hermes_desktop_button.pack(side="left", padx=8)
+            self.diagnose_button.pack(side="left", padx=(8, 0))
 
-            advanced = ttk.Frame(self.status_box)
-            advanced.pack(fill="x", pady=(8, 0))
-            self.advanced_label = ttk.Label(advanced)
-            self.advanced_label.pack(side="left")
-            self.agnes_cli_button = ttk.Button(advanced, command=lambda: self.install("agnes"))
-            self.agnes_cli_button.pack(side="left", padx=8)
-            self.hermes_cli_button = ttk.Button(advanced, command=lambda: self.install("hermes"))
-            self.hermes_cli_button.pack(side="left")
-
-            self.project_box = ttk.LabelFrame(self.outer, padding=14)
-            self.project_box.pack(fill="x", pady=14)
-            row = ttk.Frame(self.project_box)
+            self.project_box = ttk.LabelFrame(self.outer, padding=16, style="Card.TLabelframe")
+            self.project_box.pack(fill="x", pady=(12, 0))
+            row = ttk.Frame(self.project_box, style="Advanced.TFrame")
             row.pack(fill="x")
-            ttk.Entry(row, textvariable=self.project_var).pack(side="left", fill="x", expand=True)
-            self.browse_button = ttk.Button(row, command=self.choose_project)
+            ttk.Entry(row, textvariable=self.project_var, font=("Segoe UI", 10)).pack(
+                side="left", fill="x", expand=True, ipady=5
+            )
+            self.browse_button = ttk.Button(row, command=self.choose_project, style="Primary.TButton")
             self.browse_button.pack(side="left", padx=(8, 0))
-            self.demo_button = ttk.Button(row, command=self.create_demo)
-            self.demo_button.pack(side="left", padx=(8, 0))
+            self.demo_button = ttk.Button(row, command=self.create_demo, style="Link.TButton")
+            self.demo_button.pack(side="left", padx=(6, 0))
 
-            resume_row = ttk.Frame(self.project_box)
-            resume_row.pack(fill="x", pady=(10, 0))
-            ttk.Label(resume_row, textvariable=self.resume_var).pack(side="left", fill="x", expand=True)
-            self.refresh_resume_button = ttk.Button(resume_row, command=self.refresh_resume)
+            resume_row = ttk.Frame(self.project_box, style="Advanced.TFrame")
+            resume_row.pack(fill="x", pady=(8, 0))
+            ttk.Label(
+                resume_row,
+                textvariable=self.resume_var,
+                style="Muted.TLabel",
+            ).pack(side="left", fill="x", expand=True)
+            self.refresh_resume_button = ttk.Button(
+                resume_row,
+                command=self.refresh_resume,
+                style="Link.TButton",
+            )
             self.refresh_resume_button.pack(side="right")
-            self.resume_button = ttk.Button(resume_row, command=self.resume_latest, state="disabled")
-            self.resume_button.pack(side="right", padx=(0, 8))
+            self.resume_button = ttk.Button(
+                resume_row,
+                command=self.resume_latest,
+                state="disabled",
+                style="Secondary.TButton",
+            )
+            self.resume_button.pack(side="right", padx=(0, 6))
 
-            self.task_box = ttk.LabelFrame(self.outer, padding=14)
-            self.task_box.pack(fill="both", expand=True)
-            self.task = tk.Text(self.task_box, height=8, wrap="word", font=("Segoe UI", 11))
+            self.task_box = ttk.LabelFrame(self.outer, padding=16, style="Card.TLabelframe")
+            self.task_box.pack(fill="both", expand=True, pady=(12, 0))
+            self.task = tk.Text(
+                self.task_box,
+                height=6,
+                wrap="word",
+                font=("Segoe UI", 11),
+                bg="#fbfcfe",
+                fg="#172033",
+                insertbackground="#172033",
+                relief="solid",
+                borderwidth=1,
+                highlightthickness=1,
+                highlightbackground="#dfe4ec",
+                highlightcolor="#8aa4ff",
+                padx=12,
+                pady=10,
+            )
             self.task.pack(fill="both", expand=True)
+            task_actions = ttk.Frame(self.task_box, style="Advanced.TFrame")
+            task_actions.pack(fill="x", pady=(10, 0))
+            self.start_button = ttk.Button(
+                task_actions,
+                command=self.start,
+                style="Primary.TButton",
+            )
+            self.start_button.pack(side="right")
 
-            controls = ttk.Frame(self.task_box)
-            controls.pack(fill="x", pady=(12, 0))
-            self.runtime_label = ttk.Label(controls)
+            self.utility_row = ttk.Frame(self.outer, style="App.TFrame")
+            self.utility_row.pack(fill="x", pady=(10, 0))
+            self.advanced_toggle = ttk.Button(
+                self.utility_row,
+                command=self._toggle_advanced,
+                style="Link.TButton",
+            )
+            self.advanced_toggle.pack(side="left")
+            self.details_toggle = ttk.Button(
+                self.utility_row,
+                command=self._toggle_details,
+                style="Link.TButton",
+            )
+            self.details_toggle.pack(side="left", padx=(4, 0))
+
+            self.advanced_panel = ttk.LabelFrame(self.outer, padding=14, style="Card.TLabelframe")
+            advanced_runtime = ttk.Frame(self.advanced_panel, style="Advanced.TFrame")
+            advanced_runtime.pack(fill="x")
+            self.runtime_label = ttk.Label(advanced_runtime, style="Muted.TLabel")
             self.runtime_label.pack(side="left")
             self.runtime_combo = ttk.Combobox(
-                controls,
+                advanced_runtime,
                 textvariable=self.runtime_var,
                 state="readonly",
                 width=22,
@@ -176,18 +246,102 @@ def main(*, ui_self_test: bool = False) -> int:
             self.runtime_combo.pack(side="left", padx=8)
             self.runtime_combo.bind("<<ComboboxSelected>>", self._on_runtime_change)
             self.agnes_check = ttk.Checkbutton(
-                controls,
+                advanced_runtime,
                 variable=self.agnes_free_var,
                 command=self._on_agnes_free_toggle,
             )
             self.agnes_check.pack(side="left", padx=8)
-            self.start_button = ttk.Button(controls, command=self.start)
-            self.start_button.pack(side="right")
 
-            self.log_box = ttk.LabelFrame(self.outer, padding=10)
-            self.log_box.pack(fill="both", expand=True, pady=(14, 0))
-            self.log = tk.Text(self.log_box, height=9, wrap="word", state="disabled", font=("Consolas", 9))
+            manual = ttk.Frame(self.advanced_panel, style="Advanced.TFrame")
+            manual.pack(fill="x", pady=(8, 0))
+            self.hermes_local_button = ttk.Button(manual, command=self.open_hermes, style="Secondary.TButton")
+            self.hermes_local_button.pack(side="left")
+            self.agnes_desktop_button = ttk.Button(
+                manual,
+                command=lambda: self.open_beginner_setup("agnes"),
+                style="Secondary.TButton",
+            )
+            self.agnes_desktop_button.pack(side="left", padx=(6, 0))
+            self.hermes_desktop_button = ttk.Button(
+                manual,
+                command=lambda: self.open_beginner_setup("hermes"),
+                style="Secondary.TButton",
+            )
+            self.hermes_desktop_button.pack(side="left", padx=(6, 0))
+
+            cli_row = ttk.Frame(self.advanced_panel, style="Advanced.TFrame")
+            cli_row.pack(fill="x", pady=(8, 0))
+            self.advanced_label = ttk.Label(cli_row, style="Muted.TLabel")
+            self.advanced_label.pack(side="left")
+            self.agnes_cli_button = ttk.Button(
+                cli_row,
+                command=lambda: self.install("agnes"),
+                style="Link.TButton",
+            )
+            self.agnes_cli_button.pack(side="left", padx=8)
+            self.hermes_cli_button = ttk.Button(
+                cli_row,
+                command=lambda: self.install("hermes"),
+                style="Link.TButton",
+            )
+            self.hermes_cli_button.pack(side="left")
+
+            self.details_panel = ttk.Frame(self.outer, style="App.TFrame")
+            self.technical_box = ttk.LabelFrame(self.details_panel, padding=12, style="Card.TLabelframe")
+            self.technical_box.pack(fill="x")
+            ttk.Label(
+                self.technical_box,
+                textvariable=self.status_var,
+                style="Muted.TLabel",
+                justify="left",
+            ).pack(anchor="w")
+            ttk.Label(
+                self.technical_box,
+                textvariable=self.next_var,
+                style="Muted.TLabel",
+                justify="left",
+                wraplength=820,
+            ).pack(anchor="w", pady=(5, 0))
+            self.log_box = ttk.LabelFrame(self.details_panel, padding=10, style="Card.TLabelframe")
+            self.log_box.pack(fill="both", expand=True, pady=(8, 0))
+            self.log = tk.Text(
+                self.log_box,
+                height=7,
+                wrap="word",
+                state="disabled",
+                font=("Consolas", 9),
+                bg="#0f1724",
+                fg="#d8e0ec",
+                insertbackground="#d8e0ec",
+                relief="flat",
+                padx=10,
+                pady=8,
+            )
             self.log.pack(fill="both", expand=True)
+
+        def _toggle_advanced(self) -> None:
+            self.advanced_visible = not self.advanced_visible
+            if self.advanced_visible:
+                self.advanced_panel.pack(fill="x", pady=(6, 0), before=self.utility_row)
+            else:
+                self.advanced_panel.pack_forget()
+            self._update_toggle_labels()
+
+        def _toggle_details(self) -> None:
+            self.details_visible = not self.details_visible
+            if self.details_visible:
+                self.details_panel.pack(fill="x", pady=(6, 0), before=self.task_box)
+            else:
+                self.details_panel.pack_forget()
+            self._update_toggle_labels()
+
+        def _update_toggle_labels(self) -> None:
+            self.advanced_toggle.configure(
+                text=self._tr("button.advanced_hide" if self.advanced_visible else "button.advanced_show")
+            )
+            self.details_toggle.configure(
+                text=self._tr("button.details_hide" if self.details_visible else "button.details_show")
+            )
 
         def _runtime_labels(self) -> dict[str, str]:
             return {
@@ -202,6 +356,8 @@ def main(*, ui_self_test: bool = False) -> int:
             self.status_box.configure(text=self._tr("section.system"))
             self.project_box.configure(text=self._tr("section.project"))
             self.task_box.configure(text=self._tr("section.task"))
+            self.advanced_panel.configure(text=self._tr("section.advanced"))
+            self.technical_box.configure(text=self._tr("section.technical"))
             self.log_box.configure(text=self._tr("section.activity"))
             self.diagnose_button.configure(text=self._tr("button.diagnose"))
             self.one_click_button.configure(text=self._tr("button.one_click_ready"))
@@ -218,6 +374,7 @@ def main(*, ui_self_test: bool = False) -> int:
             self.runtime_label.configure(text=self._tr("label.runtime"))
             self.agnes_check.configure(text=self._tr("checkbox.agnes_free"))
             self.start_button.configure(text=self._tr("button.start"))
+            self._update_toggle_labels()
 
             labels = self._runtime_labels()
             self.runtime_combo.configure(values=[labels["auto"], labels["agnes-free"], labels["hermes-local"]])
@@ -228,6 +385,8 @@ def main(*, ui_self_test: bool = False) -> int:
             if initial:
                 self.resume_var.set(self._tr("resume.none_selected"))
                 self.status_var.set(self._tr("status.checking"))
+                self.main_status_var.set(self._tr("status.simple_checking"))
+                self.main_hint_var.set(self._tr("status.simple_checking_hint"))
 
         def _on_language_change(self, _event=None) -> None:
             selected = self.language_var.get()
@@ -342,7 +501,7 @@ def main(*, ui_self_test: bool = False) -> int:
             if self.agnes_route.ready:
                 agnes_text = self._tr("status.agnes_api_ready", model=self.agnes_route.model or AGNES_MODEL)
                 if state.agnes_free_confirmed:
-                    agnes_text += " ? " + self._tr("status.zero_confirmed")
+                    agnes_text += " | " + self._tr("status.zero_confirmed")
             elif state.hermes_installed:
                 agnes_text = self._tr("status.agnes_api_setup_needed")
             else:
@@ -353,12 +512,12 @@ def main(*, ui_self_test: bool = False) -> int:
             if state.hermes_installed:
                 hermes_text = self._tr("status.installed")
                 if state.hermes_local_ready:
-                    hermes_text += " ? " + self._tr("status.local_ready", model=local_name)
+                    hermes_text += " | " + self._tr("status.local_ready", model=local_name)
                 else:
                     provider = str(model.get("provider") or "").strip()
                     configured_model = str(model.get("default") or model.get("model") or "").strip()
                     if provider and configured_model:
-                        hermes_text += f" ? {provider}/{configured_model}"
+                        hermes_text += f" | {provider}/{configured_model}"
 
             status_text = self._tr(
                 "status.summary",
@@ -386,6 +545,18 @@ def main(*, ui_self_test: bool = False) -> int:
                 self.verified_lane
                 and route_is_verified(report, self.verified_lane, self.verified_lane, self.verified_route)
             )
+            if self.setup_probe_running or self.setup_waiting:
+                self.main_status_var.set(self._tr("status.simple_checking"))
+                self.main_hint_var.set(self._tr("status.simple_probe"))
+            elif verified:
+                self.main_status_var.set(self._tr("status.simple_ready"))
+                self.main_hint_var.set(self._tr("status.simple_ready_hint"))
+            elif report.zero_cost_ready:
+                self.main_status_var.set(self._tr("status.simple_verify"))
+                self.main_hint_var.set(self._tr("status.simple_verify_hint"))
+            else:
+                self.main_status_var.set(self._tr("status.simple_setup"))
+                self.main_hint_var.set(self._tr("status.simple_setup_hint"))
             self.start_button.configure(state="normal" if verified and not self.running else "disabled")
             can_resume = bool(verified and self.resume_candidate is not None and not self.running)
             self.resume_button.configure(state="normal" if can_resume else "disabled")
@@ -1008,6 +1179,25 @@ def main(*, ui_self_test: bool = False) -> int:
             root = tk.Tk()
             roots.append(root)
             app = App(root)
+            root.update_idletasks()
+            assert not app.advanced_panel.winfo_ismapped()
+            assert not app.details_panel.winfo_ismapped()
+            root.geometry("820x680")
+            root.update()
+            visible_bottom = (
+                app.utility_row.winfo_rooty()
+                - root.winfo_rooty()
+                + app.utility_row.winfo_height()
+            )
+            assert visible_bottom <= root.winfo_height()
+            app._toggle_advanced()
+            root.update_idletasks()
+            assert app.advanced_panel.winfo_ismapped()
+            app._toggle_advanced()
+            app._toggle_details()
+            root.update_idletasks()
+            assert app.details_panel.winfo_ismapped()
+            app._toggle_details()
             root.update_idletasks()
 
             app.language_var.set(LANGUAGE_NAMES["zh-CN"])
