@@ -1,50 +1,64 @@
 # FirstWindow Stable Baseline
 
-The accepted stable product baseline is **v0.4.2**.
+The accepted runtime and GitHub public-source baseline is **v0.4.3**.
 
-This baseline is intentionally split into three kinds of truth so later control-only maintenance cannot be confused with a product release.
+This baseline deliberately separates **released product truth**, **checked-in public-source truth**, and **external production deployment truth** so an external deployment lag cannot be mistaken for a runtime regression.
 
 ## 1. Runtime release truth
 
 Canonical identity:
 
-- release tag: `v0.4.2`
-- tag commit: `73454bb09cfaf4c43a3fcc1a77cd3d0e80375148`
-- GitHub Release ID: `392384670`
-- Windows EXE SHA-256: `953f5f260439976d46db4f6b81dd3a74afca83e006edd0d3daf0c24b538b11b0`
+- release tag: `v0.4.3`
+- tag commit: `c5b0b4d864d57998676585efc8505232d6008c2c`
+- GitHub Release ID: `392790362`
+- Windows EXE SHA-256: `3696420971ad124cd63ed76eb02acce2d338c5a7276b7208fce33905d04865b4`
+- release Windows workflow: `35577250346` — success
+- release CI workflow: `35577250248` — success
+
+The tag-driven Windows workflow rebuilt the single-file EXE, passed packaged self-test and packaged English/简体中文 UI self-test, generated SHA256SUMS, verified tag/version equality, and created the GitHub Release.
 
 The exact runtime/package source files are pinned by Git blob SHA in `STABLE_BASELINE.json`.
 
-## 2. Public-surface truth
+## 2. GitHub public-source truth
 
-The accepted v0.4.2 public surface includes:
+Accepted main SHA:
 
-- README and website content
-- the real packaged-v0.4.2 PNG and GIF captures
-- production deployment `dpl_G7TPV8JNzKspE1aoBjMm6w8jPcaW`
-- canonical production URL: https://firstwindow-public.vercel.app
-- independent production verification run `35504289632`
+- `fa53893421b34736118c4cebd3df88432b33b7d2`
 
-Those files are also pinned by Git blob SHA.
+The README and checked-in website source identify v0.4.3 as the current release.
 
-## 3. Control truth
+The existing PNG/GIF are intentionally retained as **historical real v0.4.2 captures**. They are labeled as historical and must not be represented as v0.4.3 screenshots.
 
-While v0.4.2 remains the stable product baseline:
+Those source files are pinned by Git blob SHA in `STABLE_BASELINE.json`.
 
-> During an explicit scoped engineering or release-candidate transition, source runtime files — including the package version — may intentionally differ from the last released baseline. The old release identity remains pinned until a new tag/release is published and accepted. Returning to post-release/frozen state re-enables exact version and file matching.
+## 3. External production deployment truth
 
+Canonical URL:
+
+- https://firstwindow-public.vercel.app
+
+At the v0.4.3 baseline closure check, the canonical Vercel deployment still served `softwareVersion=0.4.2` and footer `current release v0.4.2`.
+
+This is an **external synchronization blocker**, not evidence that the v0.4.3 GitHub Release failed. Production must not be claimed as v0.4.3 until independently read back and verified.
+
+Verification used DNS-over-HTTPS to obtain a current Vercel A record and `curl --resolve` so the request preserved the correct Host/SNI and TLS validation. TLS verification was not disabled.
+
+## 4. Control truth
+
+While v0.4.3 remains the accepted product baseline:
 
 - `PROJECT_STATE.status == "post-release"`
-- `current_release == "v0.4.2"`
+- `current_release == "v0.4.3"`
 - `active_engineering_issue == null`
 - `engineering_queue == []`
 - `launch_control.product_baseline_frozen == true`
+- launch issue remains `#17`
 
-The launch track may continue without changing the stable product baseline.
+External blockers may remain in post-release state, but they must be explicit and must not be turned into false product claims.
 
 ## Mutation rule
 
-A runtime or accepted public-surface file must not drift silently.
+A runtime or accepted GitHub public-source file must not drift silently.
 
 To intentionally change one:
 
@@ -55,17 +69,15 @@ To intentionally change one:
 5. establish the next accepted baseline;
 6. only then update `STABLE_BASELINE.json`.
 
-Control-only files may evolve without changing the v0.4.2 runtime/public baseline, provided the frozen-product contract still passes.
+External production deployment state is verified independently from repository source truth.
 
 ## Automated checks
 
 `python scripts/check_stable_baseline.py` verifies:
 
 - exact runtime file set and Git blob identities;
-- exact public-surface file set and Git blob identities;
+- exact GitHub public-source file set and Git blob identities;
 - package version;
 - frozen project-control state.
 
-CI additionally verifies the live GitHub tag and Release asset identities.
-
-The branch-protection policy on `main` is the repository-level enforcement layer: pull requests are required, CI and Windows checks are required, and force-push/delete are blocked.
+CI additionally verifies the pinned GitHub tag and Release asset identities. During a scoped release transition it validates the pinned prior release by ID without incorrectly requiring it to remain GitHub Latest; once frozen, Latest must equal the accepted stable release.
