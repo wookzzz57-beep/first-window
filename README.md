@@ -51,7 +51,7 @@ No terminal is required for the normal Windows flow. On a first run, **Make Me R
   <img src="docs/assets/firstwindow-startup.gif?v=real-v042-20260920" alt="Real FirstWindow v0.4.2 Windows walkthrough" width="880">
 </p>
 
-<p align="center"><sub>Captured from the packaged v0.4.2 Windows EXE: switch English / 简体中文, choose a safe demo project, and enter a task. Window-only capture; no generated mock UI.</sub></p>
+<p align="center"><sub>Historical walkthrough captured from the packaged v0.4.2 Windows EXE: switch English / 简体中文, choose a safe demo project, and enter a task. The v0.4.3 release keeps the same guarded execution model but ships the newer single-path beginner workspace. Window-only capture; no generated mock UI.</sub></p>
 
 ## What makes FirstWindow different
 
@@ -63,9 +63,9 @@ No terminal is required for the normal Windows flow. On a first run, **Make Me R
 | “The agent said done. Is it actually done?” | **Evidence-based acceptance.** Agent exit success and final task verification are separate gates. |
 | “I just want a Windows app.” | **GUI-first.** English / 简体中文 switching, readiness checks, Start, Continue, and status are available in one window. |
 
-## Current release — v0.4.2
+## Current release — v0.4.3
 
-The current **v0.4.2 Windows app** is the stable product baseline.
+The current **v0.4.3 Windows app** is the latest released product.
 
 - Packaged **Windows x64 EXE**
 - **SHA-256 checksum** published with the release
