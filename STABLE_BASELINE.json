@@ -3,7 +3,7 @@
   "project": "FirstWindow",
   "baseline_id": "v0.4.3-stable",
   "status": "stable-frozen",
-  "frozen_from_main_sha": "fa53893421b34736118c4cebd3df88432b33b7d2",
+  "frozen_from_main_sha": "0622d28aea287e063d1f426b0dabc45c9d8d5158",
   "runtime_release": {
     "version": "0.4.3",
     "tag": "v0.4.3",
@@ -120,7 +120,7 @@
     ]
   },
   "public_surface": {
-    "accepted_main_sha": "fa53893421b34736118c4cebd3df88432b33b7d2",
+    "accepted_main_sha": "0622d28aea287e063d1f426b0dabc45c9d8d5158",
     "production_url": "https://firstwindow-public.vercel.app",
     "production_deployment_id": "dpl_G7TPV8JNzKspE1aoBjMm6w8jPcaW",
     "production_status": "external-sync-pending-v0.4.3",
@@ -129,12 +129,12 @@
     "external_verify_run": null,
     "real_capture_png_sha256": "02a54467d2208a05a0dfe6b5a60fc68cc25620b491c01bbdd50a73915979e3b5",
     "real_capture_gif_sha256": "a973fce2b6bef560b7e4c90b0e0b8955abd56a97467cf2c5315e12b3118daac1",
-    "capture_provenance": "Historical packaged v0.4.2 captures; intentionally not relabeled as v0.4.3.",
+    "capture_provenance": "Primary GitHub homepage capture is from the official packaged v0.4.3 EXE with verified release SHA-256; historical packaged v0.4.2 captures remain preserved separately for provenance/site history.",
     "files": [
       {
         "path": "README.md",
-        "git_blob_sha": "3950bf8d7ddb45197b2c867d918d5894d673f8d1",
-        "size": 10251
+        "git_blob_sha": "e7d8e73317356cdff922d14dde5013e17ed26a64",
+        "size": 10445
       },
       {
         "path": "docs/assets/firstwindow-startup.gif",
@@ -165,8 +165,20 @@
         "path": "vercel.json",
         "git_blob_sha": "3b0c07fe7670a858dce2e3d44b7c41743b9bd2be",
         "size": 183
+      },
+      {
+        "path": "docs/assets/firstwindow-startup-v043.gif",
+        "git_blob_sha": "7b9d714e7a25c91d3da66e55fe6efcd1d8cd2db7",
+        "size": 145198
+      },
+      {
+        "path": "docs/assets/firstwindow-window-v043.png",
+        "git_blob_sha": "c69e590431f969e55ed47a14f18b8892df79d8eb",
+        "size": 108234
       }
-    ]
+    ],
+    "real_capture_v043_png_sha256": "886781e9c68b7e0e4f77f813aec1f70b27d8a9ff4eaa2d3ccf2d434ee074011c",
+    "real_capture_v043_gif_sha256": "86d84b60c9980efd7a850e40348a4ccb860bfe7c2dc6dedfa549d9b0d30d1ae8"
   },
   "control_contract": {
     "current_release": "v0.4.3",

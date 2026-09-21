@@ -21,15 +21,20 @@ The exact runtime/package source files are pinned by Git blob SHA in `STABLE_BAS
 
 ## 2. GitHub public-source truth
 
-Accepted main SHA:
+Accepted public-surface main SHA:
 
-- `fa53893421b34736118c4cebd3df88432b33b7d2`
+- `0622d28aea287e063d1f426b0dabc45c9d8d5158`
 
-The README and checked-in website source identify v0.4.3 as the current release.
+The README identifies v0.4.3 as the current release and now uses **real packaged v0.4.3 window-only captures**:
 
-The existing PNG/GIF are intentionally retained as **historical real v0.4.2 captures**. They are labeled as historical and must not be represented as v0.4.3 screenshots.
+- `docs/assets/firstwindow-window-v043.png`
+- `docs/assets/firstwindow-startup-v043.gif`
 
-Those source files are pinned by Git blob SHA in `STABLE_BASELINE.json`.
+The capture source was the official v0.4.3 Release EXE after verifying SHA-256 `3696420971ad124cd63ed76eb02acce2d338c5a7276b7208fce33905d04865b4`. The application window was captured in isolation; no unrelated desktop/browser content is represented.
+
+The earlier v0.4.2 PNG/GIF remain byte-for-byte preserved as historical provenance assets for the existing historical website block.
+
+All accepted public-source files are pinned by Git blob SHA in `STABLE_BASELINE.json`.
 
 ## 3. External production deployment truth
 
