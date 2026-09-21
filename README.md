@@ -20,6 +20,8 @@
   ·
   <a href="docs/BEGINNER.md">Beginner Guide</a>
   ·
+  <a href="docs/BEGINNER.zh-CN.md">简体中文教程</a>
+  ·
   <a href="https://github.com/wookzzz57-beep/first-window/releases/latest">Release Notes</a>
 </p>
 
@@ -35,7 +37,9 @@ FirstWindow is a **beginner-first Windows launcher for coding agents**. It keeps
 | --- | --- | --- |
 | Press **Make Me Ready / 一键就绪**. FirstWindow checks the setup and runs a live readiness probe. | Choose the project folder the agent is allowed to work in. | Write what you want in plain language and press **Start / 开始**. |
 
-No terminal is required for the normal Windows flow. If an interrupted task is found, FirstWindow can offer **Continue / 继续** after the exact execution route is verified again.
+No terminal is required for the normal Windows flow. On a first run, **Make Me Ready / 一键就绪** handles the setup sequence and only stops for things that require your decision, such as approving the official Hermes installer, pasting your own Agnes API key, or confirming that the current route is $0 for your account. If a task is interrupted, use **Continue / 继续** instead of starting over.
+
+**First time?** Use the [5-minute English guide](docs/BEGINNER.md) or [5 分钟简体中文教程](docs/BEGINNER.zh-CN.md). The advanced routing/security details are there when you need them, not before your first task.
 
 <p align="center">
   <strong>Simple surface. Guarded execution. Verifiable completion.</strong>
@@ -206,7 +210,7 @@ FirstWindow intentionally does **not**:
 - silently switch providers after Agnes authentication fails
 - claim Managed Local inference was verified when a validated local model was not available
 
-See **[docs/BEGINNER.md](docs/BEGINNER.md)** for the full credential, route, and verification flow.
+Start with the **[5-minute English guide](docs/BEGINNER.md)** or **[5 分钟简体中文教程](docs/BEGINNER.zh-CN.md)**. Technical credential, routing, and verification details are kept below the quick-start path.
 
 ## Feedback and community
 
