@@ -35,17 +35,18 @@
       "id": "EXP-003",
       "issue": 17,
       "channel": "TikTok",
-      "status": "paused-for-v0.4.3-truth-reconciliation",
+      "status": "draft-paused-awaiting-v0.4.3-capture",
       "published_url": null,
       "product_baseline_frozen": true,
       "engineering_wip": 0,
-      "window_end": "2026-09-21T19:30:00+08:00",
-      "next_action": "Before publication, reconcile the scheduled 2026-09-21 TikTok caption/media with v0.4.3 release truth. Do not present the historical v0.4.2 capture as a v0.4.3 capture. Keep the 2026-09-22 variant draft until the first experiment is read back."
+      "metricool_post_uuid": "-8200387215097377077",
+      "metricool_post_id": 379227355,
+      "next_action": "Create and verify a real v0.4.3 Windows UI capture before reactivating this single TikTok experiment. Caption is already reconciled to v0.4.3; the existing v0.4.2 video is explicitly historical and the post is draft, so it will not auto-publish."
     }
   },
   "control_board_issue": 8,
   "wip_limit": 1,
-  "resume_point": "v0.4.3 is officially released and accepted on GitHub. Tag v0.4.3 points to c5b0b4d864d57998676585efc8505232d6008c2c; tag CI #305 and Windows App #120 passed; Release 392790362 contains EXE + SHA256SUMS with matching EXE SHA-256 3696420971ad124cd63ed76eb02acce2d338c5a7276b7208fce33905d04865b4. Public release truth PR #53 merged at fa53893421b34736118c4cebd3df88432b33b7d2 and main CI #315 / Windows #124 passed. Runtime and GitHub public-source baseline are frozen as v0.4.3. Vercel canonical production still serves v0.4.2 and remains an explicit external sync blocker; do not claim it is updated until independently verified.",
+  "resume_point": "v0.4.3 is officially released and accepted on GitHub. Tag v0.4.3 points to c5b0b4d864d57998676585efc8505232d6008c2c; tag CI #305 and Windows App #120 passed; Release 392790362 contains EXE + SHA256SUMS with matching EXE SHA-256 3696420971ad124cd63ed76eb02acce2d338c5a7276b7208fce33905d04865b4. Public release truth PR #53 merged at fa53893421b34736118c4cebd3df88432b33b7d2 and main CI #315 / Windows #124 passed. Runtime and GitHub public-source baseline are frozen as v0.4.3. Vercel canonical production still serves v0.4.2 and remains an explicit external sync blocker; do not claim it is updated until independently verified. The 2026-09-21 TikTok experiment has been corrected to v0.4.3 release copy and moved to draft because its media is a historical v0.4.2 capture; reactivate only after a real v0.4.3 capture is verified.",
   "last_verified_main_sha": "fa53893421b34736118c4cebd3df88432b33b7d2",
   "evidence": {
     "main_linux_ci_run": 35438404706,
@@ -586,7 +587,15 @@
       "public_truth_main_windows": "success",
       "production_url": "https://firstwindow-public.vercel.app",
       "production_observed_version": "0.4.2",
-      "production_v0_4_3_sync": "external-blocker"
+      "production_v0_4_3_sync": "external-blocker",
+      "launch_reconciliation": {
+        "metricool_post_uuid": "-8200387215097377077",
+        "metricool_post_id": 379227355,
+        "caption_current_release": "v0.4.3",
+        "historical_media_labeled": true,
+        "draft": true,
+        "auto_publish_blocked_by_draft": true
+      }
     }
   },
   "external_blockers": [
