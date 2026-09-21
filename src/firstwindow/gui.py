@@ -1324,7 +1324,8 @@ def main(*, ui_self_test: bool = False) -> int:
                 - root.winfo_rooty()
                 + app.utility_row.winfo_height()
             )
-            assert visible_bottom <= root.winfo_height()
+            if visible_bottom > root.winfo_height():
+                raise SystemExit(73)
             default_copy = " ".join(
                 str(widget.cget("text"))
                 for widget in (
