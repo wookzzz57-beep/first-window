@@ -1,15 +1,13 @@
 {
   "schema_version": 1,
   "project": "FirstWindow",
-  "phase": "v0.4.3-onboarding-engineering",
-  "status": "active",
+  "phase": "v0.4.2-post-release",
+  "status": "post-release",
   "canonical_branch": "main",
   "current_release": "v0.4.2",
-  "primary_objective": "Issue #46: simplify the first-run onboarding and bilingual beginner path without changing the verified v0.4.2 execution architecture or safety/cost gates.",
-  "active_engineering_issue": 46,
-  "engineering_queue": [
-    46
-  ],
+  "primary_objective": "Resume issue #17 post-release distribution on the accepted v0.4.2 runtime baseline with the new five-step bilingual beginner guides; keep TikTok as the single next active channel.",
+  "active_engineering_issue": null,
+  "engineering_queue": [],
   "completed_engineering_issues": [
     4,
     5,
@@ -19,7 +17,8 @@
     22,
     25,
     34,
-    36
+    36,
+    46
   ],
   "launch_track": [
     17
@@ -32,21 +31,21 @@
     "target_stars": 10,
     "success_alternative": "enough real-user evidence to identify the dominant blocking funnel step",
     "active_experiment": {
-      "id": "EXP-002",
+      "id": "EXP-003",
       "issue": 17,
-      "channel": "Aggregate observation window",
-      "status": "paused-for-engineering",
+      "channel": "TikTok",
+      "status": "scheduled",
       "published_url": null,
       "product_baseline_frozen": true,
-      "engineering_wip": 1,
-      "window_end": "2026-09-21T12:40:00+08:00",
-      "next_action": "Resume issue #17 only after issue #46 is accepted and project state returns to post-release. Do not activate another launch channel while engineering WIP is active."
+      "engineering_wip": 0,
+      "window_end": "2026-09-21T19:30:00+08:00",
+      "next_action": "Allow the already-scheduled TikTok post at 2026-09-21 18:00 Asia/Shanghai to publish, then read back its public status and measurable response before activating the 2026-09-22 draft or any other channel."
     }
   },
   "control_board_issue": 8,
   "wip_limit": 1,
-  "resume_point": "Issue #46 is the sole active engineering WIP on branch issue-46-beginner-quickstart. Simplify the beginner path to five steps, add reciprocal English/简体中文 guides, simplify beginner-facing i18n copy, preserve the verified Hermes Agent -> Agnes API route and all $0/credential/readiness/acceptance gates, then run repository validation, compile, unit/UI tests, PR CI and Windows App checks before merge. Issue #17 launch work is paused until acceptance.",
-  "last_verified_main_sha": "b40380cffe3584b59b1c2fee978b4cc9b9759037",
+  "resume_point": "Issue #46 is accepted and merged via PR #47. The v0.4.2 runtime is unchanged; English/简体中文 live switching and packaged UI self-test remain verified. Beginner documentation is now a five-step bilingual quickstart with technical details below the first-use path. Resume issue #17 with the already-scheduled TikTok post at 2026-09-21 18:00 Asia/Shanghai as the only active channel; read back its result before another variant/channel.",
+  "last_verified_main_sha": "2a24cc751b02cdde2c85575e5519e357d938c92b",
   "evidence": {
     "main_linux_ci_run": 35438404706,
     "main_linux_ci": "success",
@@ -518,18 +517,39 @@
       "closure_main_windows_run": 35505327518,
       "closure_main_windows": "success",
       "branch_protection_verified_on_protected_pr": true
+    },
+    "issue_46": {
+      "status": "accepted-docs-only",
+      "issue": 46,
+      "pr": 47,
+      "merge_sha": "2a24cc751b02cdde2c85575e5519e357d938c92b",
+      "pr_ci_run": 35567277734,
+      "pr_ci": "success",
+      "pr_windows_run": 35567277728,
+      "pr_windows": "success",
+      "main_ci_run": 35567398391,
+      "main_ci": "success",
+      "main_windows_run": 35567398452,
+      "main_windows": "success",
+      "unit_tests": "118/118 pass",
+      "beginner_quickstart_steps": 5,
+      "bilingual_guides": true,
+      "packaged_self_test": "success",
+      "packaged_ui_language_self_test": "success",
+      "runtime_files_changed": false,
+      "execution_architecture_changed": false
     }
   },
   "external_blockers": [],
   "metadata_notes": [
     "Canonical repository is wookzzz57-beep/first-window.",
-    "Repository description is updated.",
     "Real UI assets are actual captures from the GitHub Actions-built Windows EXE, not generated mockups.",
     "v0.4.2 is the verified released baseline; issue #36 remains active only for public-surface and production verification before launch resumes.",
     "Public production URL: https://firstwindow-public.vercel.app",
     "Post-release launch evidence informs issue promotion; it does not directly mutate product scope.",
     "v0.4.1 public site release truth and canonical production deployment were independently verified after issue #25; production root rewrite uses /site/index with cleanUrls=true.",
-    "Issue #46 explicitly promotes beginner-onboarding simplification into scoped engineering; v0.4.2 remains the released stable baseline while this branch is under verification."
+    "Issue #46 simplified the beginner documentation to five steps in English and 简体中文; v0.4.2 runtime files and execution architecture remained unchanged.",
+    "GitHub repository Description still contains stale v0.4.1 wording; this is a launch-surface metadata drift tracked under issue #17, not a runtime regression."
   ],
   "release_gates": [
     "repository validation passes",
