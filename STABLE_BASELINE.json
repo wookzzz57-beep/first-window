@@ -3,7 +3,7 @@
   "project": "FirstWindow",
   "baseline_id": "v0.4.2-stable",
   "status": "stable-frozen",
-  "frozen_from_main_sha": "3aad3797691826f1e7f407c1084349e8bd6f6b9e",
+  "frozen_from_main_sha": "2a24cc751b02cdde2c85575e5519e357d938c92b",
   "runtime_release": {
     "version": "0.4.2",
     "tag": "v0.4.2",
@@ -120,7 +120,7 @@
     ]
   },
   "public_surface": {
-    "accepted_main_sha": "767fbf9c5f4552219311681781faf24234c79b9c",
+    "accepted_main_sha": "2a24cc751b02cdde2c85575e5519e357d938c92b",
     "production_url": "https://firstwindow-public.vercel.app",
     "production_deployment_id": "dpl_G7TPV8JNzKspE1aoBjMm6w8jPcaW",
     "external_verify_run": 35504289632,
@@ -129,8 +129,8 @@
     "files": [
       {
         "path": "README.md",
-        "git_blob_sha": "563e2eb310b803dd21ec4354b428a59c99c2a190",
-        "size": 9496
+        "git_blob_sha": "06d49b168bd306f557131047605a5e37d37b10ce",
+        "size": 10118
       },
       {
         "path": "docs/assets/firstwindow-startup.gif",
