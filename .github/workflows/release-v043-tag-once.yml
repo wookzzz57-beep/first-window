@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   create-tag:
@@ -32,8 +33,30 @@ jobs:
           if gh api "repos/$REPO/git/ref/tags/$TAG" >/tmp/tag.json 2>/dev/null; then
             existing="$(python -c "import json; print(json.load(open('/tmp/tag.json'))['object']['sha'])")"
             test "$existing" = "$TARGET_SHA"
-            echo "$TAG already exists on the accepted candidate; nothing to change."
+            echo "$TAG already exists on the accepted candidate."
+          else
+            if gh api "repos/$REPO/releases/tags/$TAG" >/dev/null 2>&1; then
+              echo "Release exists without expected tag ref; refusing to mutate."
+              exit 1
+            fi
+
+            gh api --method POST "repos/$REPO/git/refs" \
+              -f ref="refs/tags/$TAG" \
+              -f sha="$TARGET_SHA"
+
+            created="$(gh api "repos/$REPO/git/ref/tags/$TAG" --jq '.object.sha')"
+            test "$created" = "$TARGET_SHA"
+            echo "Created $TAG -> $TARGET_SHA"
+          fi
+
+          if gh api "repos/$REPO/releases/tags/$TAG" >/dev/null 2>&1; then
+            echo "Release $TAG already exists; nothing to dispatch."
             exit 0
+          fi
+
+          gh workflow run windows-build.yml --repo "$REPO" --ref "$TAG"
+          echo "Dispatched Windows App on $TAG"
+          exit 0
           fi
 
           if gh api "repos/$REPO/releases/tags/$TAG" >/dev/null 2>&1; then
