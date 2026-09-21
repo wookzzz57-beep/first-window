@@ -46,6 +46,38 @@ class I18nTests(unittest.TestCase):
         self.assertEqual(translate("en", "button.one_click_ready"), "Make Me Ready")
         self.assertEqual(translate("zh-CN", "missing.key"), "missing.key")
 
+    def test_beginner_workspace_keys_exist_in_both_languages(self):
+        keys = (
+            "step.ready",
+            "step.project",
+            "step.task",
+            "project.hint",
+            "start.helper",
+            "button.browse",
+            "button.create_demo",
+            "button.start",
+        )
+        for language in ("en", "zh-CN"):
+            for key in keys:
+                self.assertNotEqual(translate(language, key), key)
+
+    def test_primary_workspace_copy_avoids_internal_jargon(self):
+        keys = (
+            "app.subtitle",
+            "section.project",
+            "section.task",
+            "project.hint",
+            "task.default",
+            "status.simple_checking_hint",
+            "status.simple_ready_hint",
+            "status.simple_setup_hint",
+            "start.helper",
+        )
+        for language in ("en", "zh-CN"):
+            copy = " ".join(translate(language, key) for key in keys).lower()
+            for banned in ("attestation", "profile", "provider", " cli"):
+                self.assertNotIn(banned, copy)
+
 
 if __name__ == "__main__":
     unittest.main()
