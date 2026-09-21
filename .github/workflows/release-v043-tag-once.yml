@@ -1,0 +1,48 @@
+name: Publish v0.4.3 tag once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/release-v043-tag-once.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  create-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create immutable v0.4.3 tag on accepted candidate
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          TAG: v0.4.3
+          TARGET_SHA: c5b0b4d864d57998676585efc8505232d6008c2c
+        run: |
+          set -euo pipefail
+
+          latest_main="$(gh api "repos/$REPO/commits/main" --jq '.sha')"
+          test "$latest_main" != "" || { echo "Cannot resolve main"; exit 1; }
+
+          version="$(gh api "repos/$REPO/contents/pyproject.toml?ref=$TARGET_SHA" --jq '.content' | base64 -d | python -c "import sys,tomllib; print(tomllib.loads(sys.stdin.read())['project']['version'])")"
+          test "v$version" = "$TAG"
+
+          if gh api "repos/$REPO/git/ref/tags/$TAG" >/tmp/tag.json 2>/dev/null; then
+            existing="$(python -c "import json; print(json.load(open('/tmp/tag.json'))['object']['sha'])")"
+            test "$existing" = "$TARGET_SHA"
+            echo "$TAG already exists on the accepted candidate; nothing to change."
+            exit 0
+          fi
+
+          if gh api "repos/$REPO/releases/tags/$TAG" >/dev/null 2>&1; then
+            echo "Release exists without expected tag ref; refusing to mutate."
+            exit 1
+          fi
+
+          gh api --method POST "repos/$REPO/git/refs"             -f ref="refs/tags/$TAG"             -f sha="$TARGET_SHA"
+
+          created="$(gh api "repos/$REPO/git/ref/tags/$TAG" --jq '.object.sha')"
+          test "$created" = "$TARGET_SHA"
+          echo "Created $TAG -> $TARGET_SHA"
