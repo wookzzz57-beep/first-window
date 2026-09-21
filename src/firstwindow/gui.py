@@ -1296,36 +1296,39 @@ def main(*, ui_self_test: bool = False) -> int:
         original = settings_path.read_bytes() if existed else None
         roots = []
 
+        def require(condition: bool, code: int) -> None:
+            if not condition:
+                raise SystemExit(code)
+
         def assert_beginner_surface(app, root, language: str) -> None:
             root.geometry("820x680")
             root.update()
-            assert app.workspace.winfo_ismapped()
-            assert app.status_box.winfo_ismapped()
-            assert app.project_box.winfo_ismapped()
-            assert app.task_box.winfo_ismapped()
-            assert app.demo_button.winfo_ismapped()
-            assert not app.advanced_panel.winfo_ismapped()
-            assert not app.details_panel.winfo_ismapped()
-            assert not app.runtime_combo.winfo_ismapped()
-            assert not app.diagnose_button.winfo_ismapped()
-            assert app.ready_step_label.cget("text") == translate(language, "step.ready")
-            assert app.project_step_label.cget("text") == translate(language, "step.project")
-            assert app.project_title_label.cget("text") == translate(language, "section.project")
-            assert app.task_step_label.cget("text") == translate(language, "step.task")
-            assert app.task_title_label.cget("text") == translate(language, "section.task")
-            assert app.one_click_button.cget("text") == translate(language, "button.one_click_ready")
-            assert app.start_button.cget("text") == translate(language, "button.start")
-            assert app.browse_button.cget("text") == translate(language, "button.browse")
-            assert app.demo_button.cget("text") == translate(language, "button.create_demo")
-            assert app.task_hint_label.cget("text") == translate(language, "task.default")
-            assert app.start_helper_label.cget("text") == translate(language, "start.helper")
+            require(bool(app.workspace.winfo_ismapped()), 11)
+            require(bool(app.status_box.winfo_ismapped()), 12)
+            require(bool(app.project_box.winfo_ismapped()), 13)
+            require(bool(app.task_box.winfo_ismapped()), 14)
+            require(bool(app.demo_button.winfo_ismapped()), 15)
+            require(not app.advanced_panel.winfo_ismapped(), 16)
+            require(not app.details_panel.winfo_ismapped(), 17)
+            require(not app.runtime_combo.winfo_ismapped(), 18)
+            require(not app.diagnose_button.winfo_ismapped(), 19)
+            require(app.ready_step_label.cget("text") == translate(language, "step.ready"), 20)
+            require(app.project_step_label.cget("text") == translate(language, "step.project"), 21)
+            require(app.project_title_label.cget("text") == translate(language, "section.project"), 22)
+            require(app.task_step_label.cget("text") == translate(language, "step.task"), 23)
+            require(app.task_title_label.cget("text") == translate(language, "section.task"), 24)
+            require(app.one_click_button.cget("text") == translate(language, "button.one_click_ready"), 25)
+            require(app.start_button.cget("text") == translate(language, "button.start"), 26)
+            require(app.browse_button.cget("text") == translate(language, "button.browse"), 27)
+            require(app.demo_button.cget("text") == translate(language, "button.create_demo"), 28)
+            require(app.task_hint_label.cget("text") == translate(language, "task.default"), 29)
+            require(app.start_helper_label.cget("text") == translate(language, "start.helper"), 30)
             visible_bottom = (
                 app.utility_row.winfo_rooty()
                 - root.winfo_rooty()
                 + app.utility_row.winfo_height()
             )
-            if visible_bottom > root.winfo_height():
-                raise SystemExit(73)
+            require(visible_bottom <= root.winfo_height(), 31)
             default_copy = " ".join(
                 str(widget.cget("text"))
                 for widget in (
@@ -1342,44 +1345,44 @@ def main(*, ui_self_test: bool = False) -> int:
                 )
             ).lower()
             for banned in ("attestation", "profile", "provider", " cli"):
-                assert banned not in default_copy
+                require(banned not in default_copy, 32)
 
         try:
             root = tk.Tk()
             roots.append(root)
             app = App(root)
             root.update_idletasks()
-            assert not app.resume_row.winfo_ismapped()
-            assert not app.task.get("1.0", "end").strip()
+            require(not app.resume_row.winfo_ismapped(), 41)
+            require(not app.task.get("1.0", "end").strip(), 42)
             assert_beginner_surface(app, root, app.language)
 
             app._toggle_advanced()
             root.update_idletasks()
-            assert app.advanced_panel.winfo_ismapped()
-            assert app.runtime_combo.winfo_ismapped()
+            require(bool(app.advanced_panel.winfo_ismapped()), 50)
+            require(bool(app.runtime_combo.winfo_ismapped()), 51)
             app._toggle_advanced()
             app._toggle_details()
             root.update_idletasks()
-            assert app.details_panel.winfo_ismapped()
+            require(bool(app.details_panel.winfo_ismapped()), 52)
             app._toggle_details()
             root.update_idletasks()
 
             app.language_var.set(LANGUAGE_NAMES["zh-CN"])
             app._on_language_change()
             root.update_idletasks()
-            assert app.language == "zh-CN"
-            assert app.language_label.cget("text") == translate("zh-CN", "label.language")
+            require(app.language == "zh-CN", 60)
+            require(app.language_label.cget("text") == translate("zh-CN", "label.language"), 61)
             assert_beginner_surface(app, root, "zh-CN")
             if not app.agnes_route.ready:
-                assert translate("zh-CN", "runtime.agnes_free") not in tuple(app.runtime_combo["values"])
-            assert load_language(settings_path, system_locale="en") == "zh-CN"
+                require(translate("zh-CN", "runtime.agnes_free") not in tuple(app.runtime_combo["values"]), 62)
+            require(load_language(settings_path, system_locale="en") == "zh-CN", 63)
             root.destroy()
 
             root2 = tk.Tk()
             roots.append(root2)
             app2 = App(root2)
             root2.update_idletasks()
-            assert app2.language == "zh-CN"
+            require(app2.language == "zh-CN", 70)
             assert_beginner_surface(app2, root2, "zh-CN")
             with tempfile.TemporaryDirectory(prefix="firstwindow-ui-resume-") as tmp:
                 project = Path(tmp)
@@ -1387,11 +1390,13 @@ def main(*, ui_self_test: bool = False) -> int:
                 app2.project_var.set(str(project))
                 app2.refresh_resume()
                 root2.update_idletasks()
-                assert app2.resume_candidate is not None
-                assert app2.resume_row.winfo_ismapped()
-                assert str(app2.resume_button.cget("state")) == "disabled"
+                require(app2.resume_candidate is not None, 71)
+                require(bool(app2.resume_row.winfo_ismapped()), 72)
+                require(str(app2.resume_button.cget("state")) == "disabled", 74)
             root2.destroy()
             return 0
+        except SystemExit:
+            raise
         except Exception:
             traceback.print_exc()
             return 1
