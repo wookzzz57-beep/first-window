@@ -474,9 +474,12 @@ def main(*, ui_self_test: bool = False) -> int:
         def _apply_language(self, *, initial: bool = False) -> None:
             self.language_label.configure(text=self._tr("label.language"))
             self.subtitle_label.configure(text=self._tr("app.subtitle"))
-            self.status_box.configure(text=self._tr("section.system"))
-            self.project_box.configure(text=self._tr("section.project"))
-            self.task_box.configure(text=self._tr("section.task"))
+            self.ready_step_label.configure(text=self._tr("step.ready"))
+            self.project_step_label.configure(text=self._tr("step.project"))
+            self.project_title_label.configure(text=self._tr("section.project"))
+            self.project_hint_label.configure(text=self._tr("project.hint"))
+            self.task_step_label.configure(text=self._tr("step.task"))
+            self.task_title_label.configure(text=self._tr("section.task"))
             self.advanced_panel.configure(text=self._tr("section.advanced"))
             self.technical_box.configure(text=self._tr("section.technical"))
             self.log_box.configure(text=self._tr("section.activity"))
@@ -495,6 +498,7 @@ def main(*, ui_self_test: bool = False) -> int:
             self.runtime_label.configure(text=self._tr("label.runtime"))
             self.agnes_check.configure(text=self._tr("checkbox.agnes_free"))
             self.start_button.configure(text=self._tr("button.start"))
+            self.start_helper_label.configure(text=self._tr("start.helper"))
             self.task_hint_label.configure(text=self._tr("task.default"))
             self._update_toggle_labels()
 
