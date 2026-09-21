@@ -1,15 +1,13 @@
 {
   "schema_version": 1,
   "project": "FirstWindow",
-  "phase": "v0.4.3-public-surface-engineering",
-  "status": "active",
+  "phase": "v0.4.3-post-release",
+  "status": "post-release",
   "canonical_branch": "main",
   "current_release": "v0.4.3",
-  "primary_objective": "Issue #58: refresh the GitHub homepage with a version-neutral repository Description and real packaged v0.4.3 PNG/GIF captures without changing the v0.4.3 runtime.",
-  "active_engineering_issue": 58,
-  "engineering_queue": [
-    58
-  ],
+  "primary_objective": "Resume issue #17 from the accepted v0.4.3 GitHub runtime/public-surface baseline. The GitHub homepage now uses real packaged v0.4.3 captures; keep external Vercel v0.4.3 synchronization tracked separately until independently verified.",
+  "active_engineering_issue": null,
+  "engineering_queue": [],
   "completed_engineering_issues": [
     4,
     5,
@@ -21,7 +19,8 @@
     34,
     36,
     46,
-    49
+    49,
+    58
   ],
   "launch_track": [
     17
@@ -37,19 +36,19 @@
       "id": "EXP-003",
       "issue": 17,
       "channel": "TikTok",
-      "status": "draft-paused-awaiting-issue-58",
+      "status": "draft-paused-ready-for-v0.4.3-media-reconciliation",
       "published_url": null,
       "product_baseline_frozen": true,
-      "engineering_wip": 1,
+      "engineering_wip": 0,
       "metricool_post_uuid": "-8200387215097377077",
       "metricool_post_id": 379227355,
-      "next_action": "Keep the existing TikTok item draft while issue #58 creates and verifies real v0.4.3 GitHub homepage capture assets. Do not activate a second launch experiment."
+      "next_action": "Issue #58 is accepted. Keep the existing TikTok item draft until its media is explicitly replaced/reconciled with the accepted real v0.4.3 capture; do not activate a second launch experiment."
     }
   },
   "control_board_issue": 8,
   "wip_limit": 1,
-  "resume_point": "Issue #58 is the sole engineering WIP. Capture only the official v0.4.3 packaged EXE window, verify EXE SHA-256, replace README v0.4.2 historical primary walkthrough with real v0.4.3 PNG/GIF, set a version-neutral repository Description, pass PR CI/Windows, then update accepted public-surface hashes and return to post-release. Runtime/provider/security/cost files remain frozen.",
-  "last_verified_main_sha": "fa53893421b34736118c4cebd3df88432b33b7d2",
+  "resume_point": "Issue #58 GitHub homepage refresh is accepted. PR #59 merged at 0622d28aea287e063d1f426b0dabc45c9d8d5158; PR CI #350 and Windows #133 passed; post-merge main CI #351 and Windows #134 passed. Repository Description is version-neutral. README now uses versioned real v0.4.3 PNG/GIF captured from the official Release 392790362 EXE after SHA-256 verification; historical v0.4.2 capture files remain unchanged for provenance/site history. Runtime v0.4.3 baseline is unchanged. Vercel production remains a separate external sync blocker.",
+  "last_verified_main_sha": "0622d28aea287e063d1f426b0dabc45c9d8d5158",
   "evidence": {
     "main_linux_ci_run": 35438404706,
     "main_linux_ci": "success",
@@ -598,6 +597,45 @@
         "draft": true,
         "auto_publish_blocked_by_draft": true
       }
+    },
+    "issue_58": {
+      "status": "accepted-github-homepage-public-surface",
+      "issue": 58,
+      "pr": 59,
+      "merge_sha": "0622d28aea287e063d1f426b0dabc45c9d8d5158",
+      "pr_ci_run": 35583887073,
+      "pr_ci": "success",
+      "pr_windows_run": 35583887137,
+      "pr_windows": "success",
+      "main_ci_run": 35584086555,
+      "main_ci": "success",
+      "main_windows_run": 35584086571,
+      "main_windows": "success",
+      "release_id": 392790362,
+      "capture_source_exe": "FirstWindow-Windows-x64.exe",
+      "capture_source_exe_sha256": "3696420971ad124cd63ed76eb02acce2d338c5a7276b7208fce33905d04865b4",
+      "capture_scope": "FirstWindow application window only; isolated APPDATA/LOCALAPPDATA; no browser, desktop, unrelated app, credential or private background content",
+      "v043_png": {
+        "path": "docs/assets/firstwindow-window-v043.png",
+        "sha256": "886781e9c68b7e0e4f77f813aec1f70b27d8a9ff4eaa2d3ccf2d434ee074011c",
+        "bytes": 108234,
+        "dimensions": "940x760"
+      },
+      "v043_gif": {
+        "path": "docs/assets/firstwindow-startup-v043.gif",
+        "sha256": "86d84b60c9980efd7a850e40348a4ccb860bfe7c2dc6dedfa549d9b0d30d1ae8",
+        "bytes": 145198,
+        "dimensions": "760x614",
+        "frames": 2,
+        "content": "real English and 简体中文 packaged application states"
+      },
+      "historical_v042_assets_unchanged": {
+        "png_sha256": "02a54467d2208a05a0dfe6b5a60fc68cc25620b491c01bbdd50a73915979e3b5",
+        "gif_sha256": "a973fce2b6bef560b7e4c90b0e0b8955abd56a97467cf2c5315e12b3118daac1"
+      },
+      "repository_description": "Beginner-first Windows coding agent launcher - one-click setup, fail-closed $0 routing, resumable tasks, and evidence-based verification. Hermes Agent + Agnes API.",
+      "runtime_files_changed": false,
+      "execution_architecture_changed": false
     }
   },
   "external_blockers": [
@@ -615,10 +653,10 @@
     "Post-release launch evidence informs issue promotion; it does not directly mutate product scope.",
     "v0.4.1 public site release truth and canonical production deployment were independently verified after issue #25; production root rewrite uses /site/index with cleanUrls=true.",
     "Issue #46 simplified the beginner documentation to five steps in English and 简体中文; v0.4.2 runtime files and execution architecture remained unchanged.",
-    "GitHub repository Description still contains stale v0.4.1 wording; this is a launch-surface metadata drift tracked under issue #17, not a runtime regression.",
     "v0.4.3 is the official GitHub Latest Release. The redesigned bilingual single-path UI is the accepted runtime baseline.",
     "The checked-in v0.4.2 PNG/GIF remain historical real captures and are explicitly labeled as such; they were not relabeled as v0.4.3.",
-    "Canonical Vercel production still serves v0.4.2 and is tracked as an external synchronization blocker, separate from the accepted v0.4.3 runtime/GitHub source baseline."
+    "Canonical Vercel production still serves v0.4.2 and is tracked as an external synchronization blocker, separate from the accepted v0.4.3 runtime/GitHub source baseline.",
+    "Issue #58 refreshed the GitHub homepage with real packaged v0.4.3 window-only captures and a version-neutral repository Description; historical v0.4.2 captures remain unchanged for provenance."
   ],
   "release_gates": [
     "repository validation passes",
@@ -661,7 +699,7 @@
     "runtime_tag_sha": "c5b0b4d864d57998676585efc8505232d6008c2c",
     "release_id": 392790362,
     "release_exe_sha256": "3696420971ad124cd63ed76eb02acce2d338c5a7276b7208fce33905d04865b4",
-    "public_surface_sha": "fa53893421b34736118c4cebd3df88432b33b7d2",
+    "public_surface_sha": "0622d28aea287e063d1f426b0dabc45c9d8d5158",
     "guard_merge_sha": "bd07abdad5e8f14ec03dadd7a11ef3a7220b13df",
     "main_protection": {
       "enabled": true,
