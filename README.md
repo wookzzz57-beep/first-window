@@ -45,13 +45,17 @@ No terminal is required for the normal Windows flow. On a first run, **Make Me R
   <strong>Simple surface. Guarded execution. Verifiable completion.</strong>
 </p>
 
-### Real Windows walkthrough
+### Real v0.4.3 Windows walkthrough
 
 <p align="center">
-  <img src="docs/assets/firstwindow-startup.gif?v=real-v042-20260920" alt="Real FirstWindow v0.4.2 Windows walkthrough" width="880">
+  <img src="docs/assets/firstwindow-startup.gif?v=real-v043-20260921" alt="Real FirstWindow v0.4.3 packaged Windows walkthrough in English and Simplified Chinese" width="880">
 </p>
 
-<p align="center"><sub>Historical walkthrough captured from the packaged v0.4.2 Windows EXE: switch English / 简体中文, choose a safe demo project, and enter a task. The v0.4.3 release keeps the same guarded execution model but ships the newer single-path beginner workspace. Window-only capture; no generated mock UI.</sub></p>
+<p align="center"><sub>Captured from the official packaged v0.4.3 Windows EXE after verifying the release SHA-256. The GIF contains only the FirstWindow application window and shows the real single-path workspace in English and 简体中文; no generated mock UI or unrelated desktop content.</sub></p>
+
+<p align="center">
+  <img src="docs/assets/firstwindow-window.png?v=real-v043-20260921" alt="Real FirstWindow v0.4.3 Windows application window" width="880">
+</p>
 
 ## What makes FirstWindow different
 
