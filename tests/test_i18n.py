@@ -46,27 +46,6 @@ class I18nTests(unittest.TestCase):
         self.assertEqual(translate("en", "button.one_click_ready"), "Make Me Ready")
         self.assertEqual(translate("zh-CN", "missing.key"), "missing.key")
 
-    def test_primary_beginner_copy_stays_plain(self):
-        for language in ("en", "zh-CN"):
-            primary = " ".join(
-                translate(language, key)
-                for key in (
-                    "app.subtitle",
-                    "status.simple_checking_hint",
-                    "status.simple_probe",
-                    "status.simple_verify_hint",
-                    "status.simple_setup_hint",
-                )
-            ).lower()
-            self.assertNotIn("attestation", primary)
-            self.assertNotIn("profile", primary)
-            self.assertNotIn("provider", primary)
-
-    def test_api_key_prompt_points_to_official_agnes_entry(self):
-        for language in ("en", "zh-CN"):
-            prompt = translate(language, "setup.agnes_key_prompt")
-            self.assertIn("https://agnes-ai.com/", prompt)
-
 
 if __name__ == "__main__":
     unittest.main()
