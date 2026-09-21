@@ -1,15 +1,13 @@
 {
   "schema_version": 1,
   "project": "FirstWindow",
-  "phase": "v0.4.3-release-candidate",
-  "status": "release-candidate",
+  "phase": "v0.4.3-post-release",
+  "status": "post-release",
   "canonical_branch": "main",
-  "current_release": "v0.4.2",
-  "primary_objective": "Issue #49: publish and verify v0.4.3 containing the accepted single-path bilingual beginner UI, without changing the verified execution/security/cost architecture.",
-  "active_engineering_issue": 49,
-  "engineering_queue": [
-    49
-  ],
+  "current_release": "v0.4.3",
+  "primary_objective": "Resume issue #17 on the accepted v0.4.3 runtime/GitHub public-source baseline; keep Vercel production v0.4.3 synchronization as an explicit external blocker until independently verified.",
+  "active_engineering_issue": null,
+  "engineering_queue": [],
   "completed_engineering_issues": [
     4,
     5,
@@ -20,7 +18,8 @@
     25,
     34,
     36,
-    46
+    46,
+    49
   ],
   "launch_track": [
     17
@@ -36,18 +35,19 @@
       "id": "EXP-003",
       "issue": 17,
       "channel": "TikTok",
-      "status": "scheduled-stable-baseline-during-engineering",
+      "status": "draft-paused-awaiting-v0.4.3-capture",
       "published_url": null,
       "product_baseline_frozen": true,
-      "engineering_wip": 1,
-      "window_end": "2026-09-21T19:30:00+08:00",
-      "next_action": "Do not modify the already-scheduled 2026-09-21 18:00 v0.4.2 TikTok post. Do not activate any second variant/channel while issue #49 is active. Verify the UI candidate independently; only promote/release it after all UX and Windows gates pass."
+      "engineering_wip": 0,
+      "metricool_post_uuid": "-8200387215097377077",
+      "metricool_post_id": 379227355,
+      "next_action": "Create and verify a real v0.4.3 Windows UI capture before reactivating this single TikTok experiment. Caption is already reconciled to v0.4.3; the existing v0.4.2 video is explicitly historical and the post is draft, so it will not auto-publish."
     }
   },
   "control_board_issue": 8,
   "wip_limit": 1,
-  "resume_point": "v0.4.3 UI implementation is merged to main at 57f1f8e9e6a5366cd9876c618dd52b6cd8550ea0 and verified by main CI #294 and Windows App #116. Prepare the release candidate by aligning pyproject.toml and firstwindow.__version__ to 0.4.3, enforce version consistency in tests, pass PR/main CI + Windows packaged gates, then create tag v0.4.3 so the tag-driven Windows workflow can publish EXE + SHA256SUMS. Do not claim public release until the GitHub Release exists and assets are verified.",
-  "last_verified_main_sha": "57f1f8e9e6a5366cd9876c618dd52b6cd8550ea0",
+  "resume_point": "v0.4.3 is officially released and accepted on GitHub. Tag v0.4.3 points to c5b0b4d864d57998676585efc8505232d6008c2c; tag CI #305 and Windows App #120 passed; Release 392790362 contains EXE + SHA256SUMS with matching EXE SHA-256 3696420971ad124cd63ed76eb02acce2d338c5a7276b7208fce33905d04865b4. Public release truth PR #53 merged at fa53893421b34736118c4cebd3df88432b33b7d2 and main CI #315 / Windows #124 passed. Runtime and GitHub public-source baseline are frozen as v0.4.3. Vercel canonical production still serves v0.4.2 and remains an explicit external sync blocker; do not claim it is updated until independently verified. The 2026-09-21 TikTok experiment has been corrected to v0.4.3 release copy and moved to draft because its media is a historical v0.4.2 capture; reactivate only after a real v0.4.3 capture is verified.",
+  "last_verified_main_sha": "fa53893421b34736118c4cebd3df88432b33b7d2",
   "evidence": {
     "main_linux_ci_run": 35438404706,
     "main_linux_ci": "success",
@@ -542,28 +542,69 @@
       "execution_architecture_changed": false
     },
     "issue_49": {
-      "status": "implementation-accepted-release-pending",
+      "status": "released-accepted-production-sync-pending",
       "issue": 49,
       "ui_pr": 50,
       "ui_merge_sha": "57f1f8e9e6a5366cd9876c618dd52b6cd8550ea0",
-      "pr_ci_run": 35569260759,
-      "pr_ci": "success",
-      "pr_windows_run": 35569260761,
-      "pr_windows": "success",
-      "main_ci_run": 35569402702,
-      "main_ci": "success",
-      "main_windows_run": 35569402691,
-      "main_windows": "success",
+      "ui_pr_ci_run": 35569260759,
+      "ui_pr_ci": "success",
+      "ui_pr_windows_run": 35569260761,
+      "ui_pr_windows": "success",
+      "ui_main_ci_run": 35569402702,
+      "ui_main_ci": "success",
+      "ui_main_windows_run": 35569402691,
+      "ui_main_windows": "success",
       "unit_tests": "120/120 pass",
-      "candidate_artifact_id": 10625173768,
-      "candidate_artifact_digest": "sha256:a3bbd7c442b89dc7b13bece2b02fe769244c8f5b6960d68c4b19f14a0f4b8c04",
-      "candidate_exe_sha256": "3170f4e161d9ec5322fcdffa3fed52bcecb26172224cb840954de902bcb46bba",
+      "release_prep_pr": 51,
+      "release_prep_merge_sha": "c5b0b4d864d57998676585efc8505232d6008c2c",
+      "tag": "v0.4.3",
+      "tag_sha": "c5b0b4d864d57998676585efc8505232d6008c2c",
+      "tag_ci_run": 35577250248,
+      "tag_ci": "success",
+      "tag_windows_run": 35577250346,
+      "tag_windows": "success",
+      "release_id": 392790362,
+      "release_url": "https://github.com/wookzzz57-beep/first-window/releases/tag/v0.4.3",
+      "release_exe_asset_id": 578591647,
+      "release_exe_bytes": 11638563,
+      "release_exe_sha256": "3696420971ad124cd63ed76eb02acce2d338c5a7276b7208fce33905d04865b4",
+      "release_checksum_asset_id": 578591648,
+      "release_checksum_bytes": 95,
+      "release_checksum_asset_sha256": "e54039d2364ee4268b409affc31f58e32b8dc0dc4e2777890ee302ce7b62537c",
+      "tag_artifact_id": 10628713111,
+      "tag_artifact_digest": "sha256:077f2a1888b21ff3555fb137a93db61e58be21d669c240b4643510f29757d962",
       "packaged_self_test": "success",
       "packaged_ui_language_self_test": "success",
-      "release": "pending"
+      "public_truth_pr": 53,
+      "public_truth_merge_sha": "fa53893421b34736118c4cebd3df88432b33b7d2",
+      "public_truth_pr_ci_run": 35577618972,
+      "public_truth_pr_ci": "success",
+      "public_truth_pr_windows_run": 35577618998,
+      "public_truth_pr_windows": "success",
+      "public_truth_main_ci_run": 35577729652,
+      "public_truth_main_ci": "success",
+      "public_truth_main_windows_run": 35577729555,
+      "public_truth_main_windows": "success",
+      "production_url": "https://firstwindow-public.vercel.app",
+      "production_observed_version": "0.4.2",
+      "production_v0_4_3_sync": "external-blocker",
+      "launch_reconciliation": {
+        "metricool_post_uuid": "-8200387215097377077",
+        "metricool_post_id": 379227355,
+        "caption_current_release": "v0.4.3",
+        "historical_media_labeled": true,
+        "draft": true,
+        "auto_publish_blocked_by_draft": true
+      }
     }
   },
-  "external_blockers": [],
+  "external_blockers": [
+    {
+      "id": "vercel-production-v0.4.3-sync",
+      "status": "open",
+      "detail": "Canonical Vercel production URL still serves softwareVersion/footer 0.4.2 after v0.4.3 GitHub release/public-source merge. Vercel connected app has no usable team/write access in this session and current authorized machines have no reusable Vercel CLI authentication. Do not claim production v0.4.3 until verified."
+    }
+  ],
   "metadata_notes": [
     "Canonical repository is wookzzz57-beep/first-window.",
     "Real UI assets are actual captures from the GitHub Actions-built Windows EXE, not generated mockups.",
@@ -573,8 +614,9 @@
     "v0.4.1 public site release truth and canonical production deployment were independently verified after issue #25; production root rewrite uses /site/index with cleanUrls=true.",
     "Issue #46 simplified the beginner documentation to five steps in English and 简体中文; v0.4.2 runtime files and execution architecture remained unchanged.",
     "GitHub repository Description still contains stale v0.4.1 wording; this is a launch-surface metadata drift tracked under issue #17, not a runtime regression.",
-    "Issue #49 promotes a scoped UI/UX candidate. The released v0.4.2 baseline remains the public stable release while candidate verification runs; the pre-existing 18:00 TikTok schedule is not modified.",
-    "v0.4.3 release candidate aligns package/runtime version metadata; public Latest remains v0.4.2 until the tag-driven release is actually published and verified."
+    "v0.4.3 is the official GitHub Latest Release. The redesigned bilingual single-path UI is the accepted runtime baseline.",
+    "The checked-in v0.4.2 PNG/GIF remain historical real captures and are explicitly labeled as such; they were not relabeled as v0.4.3.",
+    "Canonical Vercel production still serves v0.4.2 and is tracked as an external synchronization blocker, separate from the accepted v0.4.3 runtime/GitHub source baseline."
   ],
   "release_gates": [
     "repository validation passes",
@@ -610,14 +652,14 @@
     "fake engagement, spam, fabricated evidence, and deceptive launch claims are prohibited"
   ],
   "stable_baseline": {
-    "id": "v0.4.2-stable",
+    "id": "v0.4.3-stable",
     "status": "protected-and-machine-checked",
     "manifest": "STABLE_BASELINE.json",
-    "runtime_release": "v0.4.2",
-    "runtime_tag_sha": "73454bb09cfaf4c43a3fcc1a77cd3d0e80375148",
-    "release_id": 392384670,
-    "release_exe_sha256": "953f5f260439976d46db4f6b81dd3a74afca83e006edd0d3daf0c24b538b11b0",
-    "public_surface_sha": "b5e68df320300abf27e9c18611673ba372717279",
+    "runtime_release": "v0.4.3",
+    "runtime_tag_sha": "c5b0b4d864d57998676585efc8505232d6008c2c",
+    "release_id": 392790362,
+    "release_exe_sha256": "3696420971ad124cd63ed76eb02acce2d338c5a7276b7208fce33905d04865b4",
+    "public_surface_sha": "fa53893421b34736118c4cebd3df88432b33b7d2",
     "guard_merge_sha": "bd07abdad5e8f14ec03dadd7a11ef3a7220b13df",
     "main_protection": {
       "enabled": true,
@@ -632,6 +674,7 @@
       "allow_force_pushes": false,
       "allow_deletions": false
     },
-    "mutation_rule": "Runtime/public drift requires an explicit scoped engineering transition before a new accepted baseline can replace v0.4.2."
+    "production_sync": "v0.4.2-observed-external-blocker",
+    "mutation_rule": "Runtime/GitHub public-source drift requires an explicit scoped engineering transition before a new accepted baseline can replace v0.4.3. External production deployment truth remains independently verified."
   }
 }
