@@ -1295,29 +1295,67 @@ def main(*, ui_self_test: bool = False) -> int:
         existed = settings_path.exists()
         original = settings_path.read_bytes() if existed else None
         roots = []
-        try:
-            root = tk.Tk()
-            roots.append(root)
-            app = App(root)
-            root.update_idletasks()
-            assert not app.advanced_panel.winfo_ismapped()
-            assert not app.details_panel.winfo_ismapped()
-            assert not app.diagnose_button.winfo_ismapped()
-            assert not app.demo_button.winfo_ismapped()
-            assert not app.resume_row.winfo_ismapped()
-            assert not app.task.get("1.0", "end").strip()
-            assert app.task_hint_label.cget("text") == translate(app.language, "task.default")
+
+        def assert_beginner_surface(app, root, language: str) -> None:
             root.geometry("820x680")
             root.update()
+            assert app.workspace.winfo_ismapped()
+            assert app.status_box.winfo_ismapped()
+            assert app.project_box.winfo_ismapped()
+            assert app.task_box.winfo_ismapped()
+            assert app.demo_button.winfo_ismapped()
+            assert not app.advanced_panel.winfo_ismapped()
+            assert not app.details_panel.winfo_ismapped()
+            assert not app.runtime_combo.winfo_ismapped()
+            assert not app.diagnose_button.winfo_ismapped()
+            assert app.ready_step_label.cget("text") == translate(language, "step.ready")
+            assert app.project_step_label.cget("text") == translate(language, "step.project")
+            assert app.project_title_label.cget("text") == translate(language, "section.project")
+            assert app.task_step_label.cget("text") == translate(language, "step.task")
+            assert app.task_title_label.cget("text") == translate(language, "section.task")
+            assert app.one_click_button.cget("text") == translate(language, "button.one_click_ready")
+            assert app.start_button.cget("text") == translate(language, "button.start")
+            assert app.browse_button.cget("text") == translate(language, "button.browse")
+            assert app.demo_button.cget("text") == translate(language, "button.create_demo")
+            assert app.task_hint_label.cget("text") == translate(language, "task.default")
+            assert app.start_helper_label.cget("text") == translate(language, "start.helper")
             visible_bottom = (
                 app.utility_row.winfo_rooty()
                 - root.winfo_rooty()
                 + app.utility_row.winfo_height()
             )
             assert visible_bottom <= root.winfo_height()
+            default_copy = " ".join(
+                str(widget.cget("text"))
+                for widget in (
+                    app.ready_step_label,
+                    app.project_title_label,
+                    app.project_hint_label,
+                    app.task_title_label,
+                    app.task_hint_label,
+                    app.one_click_button,
+                    app.browse_button,
+                    app.demo_button,
+                    app.start_helper_label,
+                    app.start_button,
+                )
+            ).lower()
+            for banned in ("attestation", "profile", "provider", " cli"):
+                assert banned not in default_copy
+
+        try:
+            root = tk.Tk()
+            roots.append(root)
+            app = App(root)
+            root.update_idletasks()
+            assert not app.resume_row.winfo_ismapped()
+            assert not app.task.get("1.0", "end").strip()
+            assert_beginner_surface(app, root, app.language)
+
             app._toggle_advanced()
             root.update_idletasks()
             assert app.advanced_panel.winfo_ismapped()
+            assert app.runtime_combo.winfo_ismapped()
             app._toggle_advanced()
             app._toggle_details()
             root.update_idletasks()
@@ -1329,8 +1367,8 @@ def main(*, ui_self_test: bool = False) -> int:
             app._on_language_change()
             root.update_idletasks()
             assert app.language == "zh-CN"
-            assert app.one_click_button.cget("text") == translate("zh-CN", "button.one_click_ready")
             assert app.language_label.cget("text") == translate("zh-CN", "label.language")
+            assert_beginner_surface(app, root, "zh-CN")
             if not app.agnes_route.ready:
                 assert translate("zh-CN", "runtime.agnes_free") not in tuple(app.runtime_combo["values"])
             assert load_language(settings_path, system_locale="en") == "zh-CN"
@@ -1341,7 +1379,7 @@ def main(*, ui_self_test: bool = False) -> int:
             app2 = App(root2)
             root2.update_idletasks()
             assert app2.language == "zh-CN"
-            assert app2.one_click_button.cget("text") == translate("zh-CN", "button.one_click_ready")
+            assert_beginner_surface(app2, root2, "zh-CN")
             with tempfile.TemporaryDirectory(prefix="firstwindow-ui-resume-") as tmp:
                 project = Path(tmp)
                 create_task(project, "ui-resume", "resume gate self-test", default_acceptance())
