@@ -11,10 +11,10 @@ permissions:
   actions: write
 
 jobs:
-  create-tag:
+  create-tag-and-dispatch:
     runs-on: ubuntu-latest
     steps:
-      - name: Create immutable v0.4.3 tag on accepted candidate
+      - name: Ensure v0.4.3 tag and dispatch release workflow
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
@@ -24,48 +24,28 @@ jobs:
         run: |
           set -euo pipefail
 
-          latest_main="$(gh api "repos/$REPO/commits/main" --jq '.sha')"
-          test "$latest_main" != "" || { echo "Cannot resolve main"; exit 1; }
-
-          version="$(gh api "repos/$REPO/contents/pyproject.toml?ref=$TARGET_SHA" --jq '.content' | base64 -d | python -c "import sys,tomllib; print(tomllib.loads(sys.stdin.read())['project']['version'])")"
+          version="$(gh api "repos/$REPO/contents/pyproject.toml?ref=$TARGET_SHA" --jq '.content'             | base64 -d             | python -c "import sys,tomllib; print(tomllib.loads(sys.stdin.read())['project']['version'])")"
           test "v$version" = "$TAG"
 
           if gh api "repos/$REPO/git/ref/tags/$TAG" >/tmp/tag.json 2>/dev/null; then
             existing="$(python -c "import json; print(json.load(open('/tmp/tag.json'))['object']['sha'])")"
             test "$existing" = "$TARGET_SHA"
-            echo "$TAG already exists on the accepted candidate."
+            echo "$TAG already exists on accepted candidate."
           else
             if gh api "repos/$REPO/releases/tags/$TAG" >/dev/null 2>&1; then
               echo "Release exists without expected tag ref; refusing to mutate."
               exit 1
             fi
-
-            gh api --method POST "repos/$REPO/git/refs" \
-              -f ref="refs/tags/$TAG" \
-              -f sha="$TARGET_SHA"
-
+            gh api --method POST "repos/$REPO/git/refs"               -f ref="refs/tags/$TAG"               -f sha="$TARGET_SHA"
             created="$(gh api "repos/$REPO/git/ref/tags/$TAG" --jq '.object.sha')"
             test "$created" = "$TARGET_SHA"
             echo "Created $TAG -> $TARGET_SHA"
           fi
 
           if gh api "repos/$REPO/releases/tags/$TAG" >/dev/null 2>&1; then
-            echo "Release $TAG already exists; nothing to dispatch."
+            echo "Release $TAG already exists; no dispatch needed."
             exit 0
           fi
 
           gh workflow run windows-build.yml --repo "$REPO" --ref "$TAG"
           echo "Dispatched Windows App on $TAG"
-          exit 0
-          fi
-
-          if gh api "repos/$REPO/releases/tags/$TAG" >/dev/null 2>&1; then
-            echo "Release exists without expected tag ref; refusing to mutate."
-            exit 1
-          fi
-
-          gh api --method POST "repos/$REPO/git/refs"             -f ref="refs/tags/$TAG"             -f sha="$TARGET_SHA"
-
-          created="$(gh api "repos/$REPO/git/ref/tags/$TAG" --jq '.object.sha')"
-          test "$created" = "$TARGET_SHA"
-          echo "Created $TAG -> $TARGET_SHA"
