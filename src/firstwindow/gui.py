@@ -41,7 +41,7 @@ def main(*, ui_self_test: bool = False) -> int:
         def __init__(self, root: tk.Tk):
             self.root = root
             self.root.title("FirstWindow")
-            self.root.geometry("960x800")
+            self.root.geometry("940x760")
             self.root.minsize(820, 680)
 
             self.language = load_language()
@@ -85,20 +85,65 @@ def main(*, ui_self_test: bool = False) -> int:
             except tk.TclError:
                 pass
 
-            self.root.configure(background="#f4f6f9")
-            style.configure("App.TFrame", background="#f4f6f9")
-            style.configure("Card.TLabelframe", background="#ffffff", bordercolor="#dfe4ec", relief="solid")
+            self.root.configure(background="#f5f7fb")
+            style.configure("App.TFrame", background="#f5f7fb")
             style.configure(
-                "Card.TLabelframe.Label",
-                background="#f4f6f9",
-                foreground="#162033",
+                "Surface.TFrame",
+                background="#ffffff",
+                bordercolor="#e3e7ef",
+                borderwidth=1,
+                relief="solid",
+            )
+            style.configure(
+                "Hero.TFrame",
+                background="#eef3ff",
+                bordercolor="#ccd8ff",
+                borderwidth=1,
+                relief="solid",
+            )
+            style.configure("Header.TLabel", background="#f5f7fb", foreground="#111827", font=("Segoe UI", 23, "bold"))
+            style.configure("Subtitle.TLabel", background="#f5f7fb", foreground="#667085", font=("Segoe UI", 10))
+            style.configure(
+                "HeroStep.TLabel",
+                background="#eef3ff",
+                foreground="#3157d5",
+                font=("Segoe UI", 9, "bold"),
+            )
+            style.configure(
+                "HeroStatus.TLabel",
+                background="#eef3ff",
+                foreground="#111827",
+                font=("Segoe UI", 16, "bold"),
+            )
+            style.configure("HeroHint.TLabel", background="#eef3ff", foreground="#596579", font=("Segoe UI", 10))
+            style.configure(
+                "Step.TLabel",
+                background="#ffffff",
+                foreground="#3157d5",
+                font=("Segoe UI", 9, "bold"),
+            )
+            style.configure(
+                "SectionTitle.TLabel",
+                background="#ffffff",
+                foreground="#172033",
                 font=("Segoe UI", 11, "bold"),
             )
-            style.configure("Header.TLabel", background="#f4f6f9", foreground="#111827", font=("Segoe UI", 24, "bold"))
-            style.configure("Subtitle.TLabel", background="#f4f6f9", foreground="#667085", font=("Segoe UI", 10))
-            style.configure("Status.TLabel", background="#ffffff", foreground="#111827", font=("Segoe UI", 14, "bold"))
-            style.configure("Hint.TLabel", background="#ffffff", foreground="#667085", font=("Segoe UI", 10))
+            style.configure("SurfaceMuted.TLabel", background="#ffffff", foreground="#667085", font=("Segoe UI", 9))
+            style.configure("SurfaceHint.TLabel", background="#ffffff", foreground="#667085", font=("Segoe UI", 10))
             style.configure("Muted.TLabel", background="#ffffff", foreground="#667085", font=("Segoe UI", 9))
+            style.configure(
+                "Card.TLabelframe",
+                background="#ffffff",
+                bordercolor="#e3e7ef",
+                borderwidth=1,
+                relief="solid",
+            )
+            style.configure(
+                "Card.TLabelframe.Label",
+                background="#f5f7fb",
+                foreground="#344054",
+                font=("Segoe UI", 10, "bold"),
+            )
             style.configure(
                 "Primary.TButton",
                 font=("Segoe UI", 10, "bold"),
@@ -112,71 +157,115 @@ def main(*, ui_self_test: bool = False) -> int:
                 background=[("active", "#2748b8"), ("disabled", "#aab5d6")],
                 foreground=[("disabled", "#f5f7ff")],
             )
+            style.configure(
+                "Start.TButton",
+                font=("Segoe UI", 11, "bold"),
+                padding=(24, 11),
+                background="#3157d5",
+                foreground="#ffffff",
+                borderwidth=0,
+            )
+            style.map(
+                "Start.TButton",
+                background=[("active", "#2748b8"), ("disabled", "#aab5d6")],
+                foreground=[("disabled", "#f5f7ff")],
+            )
             style.configure("Secondary.TButton", font=("Segoe UI", 9), padding=(12, 8))
             style.configure("Link.TButton", font=("Segoe UI", 9), padding=(8, 6))
             style.configure("Advanced.TFrame", background="#ffffff")
+            style.configure("Surface.TEntry", padding=7)
 
-            self.outer = ttk.Frame(self.root, padding=(24, 18), style="App.TFrame")
+            self.outer = ttk.Frame(self.root, padding=(22, 16), style="App.TFrame")
             self.outer.pack(fill="both", expand=True)
 
             header = ttk.Frame(self.outer, style="App.TFrame")
             header.pack(fill="x")
-            ttk.Label(header, text="FirstWindow", style="Header.TLabel").pack(side="left", anchor="w")
+            brand = ttk.Frame(header, style="App.TFrame")
+            brand.pack(side="left", fill="x", expand=True)
+            ttk.Label(brand, text="FirstWindow", style="Header.TLabel").pack(anchor="w")
+            self.subtitle_label = ttk.Label(brand, style="Subtitle.TLabel")
+            self.subtitle_label.pack(anchor="w", pady=(1, 0))
+
             language_box = ttk.Frame(header, style="App.TFrame")
-            language_box.pack(side="right", anchor="e")
+            language_box.pack(side="right", anchor="ne", padx=(14, 0), pady=(2, 0))
             self.language_label = ttk.Label(language_box, style="Subtitle.TLabel")
             self.language_label.pack(side="left", padx=(0, 6))
             self.language_combo = ttk.Combobox(
                 language_box,
                 textvariable=self.language_var,
                 state="readonly",
-                width=12,
+                width=11,
                 values=list(LANGUAGE_NAMES.values()),
             )
             self.language_combo.pack(side="left")
             self.language_combo.bind("<<ComboboxSelected>>", self._on_language_change)
 
-            self.subtitle_label = ttk.Label(self.outer, style="Subtitle.TLabel")
-            self.subtitle_label.pack(anchor="w", pady=(2, 14))
-
-            self.status_box = ttk.LabelFrame(self.outer, padding=16, style="Card.TLabelframe")
-            self.status_box.pack(fill="x")
-            status_row = ttk.Frame(self.status_box, style="Advanced.TFrame")
+            self.status_box = ttk.Frame(self.outer, padding=(18, 15), style="Hero.TFrame")
+            self.status_box.pack(fill="x", pady=(14, 0))
+            status_row = ttk.Frame(self.status_box, style="Hero.TFrame")
             status_row.pack(fill="x")
-            status_copy = ttk.Frame(status_row, style="Advanced.TFrame")
+            status_copy = ttk.Frame(status_row, style="Hero.TFrame")
             status_copy.pack(side="left", fill="x", expand=True)
-            ttk.Label(status_copy, textvariable=self.main_status_var, style="Status.TLabel").pack(anchor="w")
+            self.ready_step_label = ttk.Label(status_copy, style="HeroStep.TLabel")
+            self.ready_step_label.pack(anchor="w")
+            ttk.Label(status_copy, textvariable=self.main_status_var, style="HeroStatus.TLabel").pack(
+                anchor="w", pady=(3, 0)
+            )
             ttk.Label(
                 status_copy,
                 textvariable=self.main_hint_var,
-                style="Hint.TLabel",
+                style="HeroHint.TLabel",
                 justify="left",
-                wraplength=600,
-            ).pack(anchor="w", pady=(4, 0))
-            status_actions = ttk.Frame(status_row, style="Advanced.TFrame")
-            status_actions.pack(side="right", padx=(14, 0))
+                wraplength=530,
+            ).pack(anchor="w", pady=(3, 0))
+            status_actions = ttk.Frame(status_row, style="Hero.TFrame")
+            status_actions.pack(side="right", padx=(18, 0))
             self.one_click_button = ttk.Button(
                 status_actions,
                 command=self.setup_zero_path,
                 style="Primary.TButton",
             )
-            self.one_click_button.pack(side="left")
+            self.one_click_button.pack()
 
-            self.project_box = ttk.LabelFrame(self.outer, padding=16, style="Card.TLabelframe")
-            self.project_box.pack(fill="x", pady=(12, 0))
-            row = ttk.Frame(self.project_box, style="Advanced.TFrame")
-            row.pack(fill="x")
-            ttk.Entry(row, textvariable=self.project_var, font=("Segoe UI", 10)).pack(
-                side="left", fill="x", expand=True, ipady=5
+            self.workspace = ttk.Frame(self.outer, padding=(18, 14), style="Surface.TFrame")
+            self.workspace.pack(fill="both", expand=True, pady=(12, 0))
+
+            self.project_box = ttk.Frame(self.workspace, style="Advanced.TFrame")
+            self.project_box.pack(fill="x")
+            project_heading = ttk.Frame(self.project_box, style="Advanced.TFrame")
+            project_heading.pack(fill="x")
+            self.project_step_label = ttk.Label(project_heading, style="Step.TLabel")
+            self.project_step_label.pack(side="left", anchor="n", padx=(0, 12), pady=(1, 0))
+            project_copy = ttk.Frame(project_heading, style="Advanced.TFrame")
+            project_copy.pack(side="left", fill="x", expand=True)
+            self.project_title_label = ttk.Label(project_copy, style="SectionTitle.TLabel")
+            self.project_title_label.pack(anchor="w")
+            self.project_hint_label = ttk.Label(
+                project_copy,
+                style="SurfaceMuted.TLabel",
+                justify="left",
+                wraplength=650,
             )
-            self.browse_button = ttk.Button(row, command=self.choose_project, style="Primary.TButton")
+            self.project_hint_label.pack(anchor="w", pady=(2, 0))
+
+            project_row = ttk.Frame(self.project_box, style="Advanced.TFrame")
+            project_row.pack(fill="x", pady=(9, 0))
+            ttk.Entry(
+                project_row,
+                textvariable=self.project_var,
+                font=("Segoe UI", 10),
+                style="Surface.TEntry",
+            ).pack(side="left", fill="x", expand=True)
+            self.browse_button = ttk.Button(project_row, command=self.choose_project, style="Secondary.TButton")
             self.browse_button.pack(side="left", padx=(8, 0))
+            self.demo_button = ttk.Button(project_row, command=self.create_demo, style="Link.TButton")
+            self.demo_button.pack(side="left", padx=(4, 0))
 
             self.resume_row = ttk.Frame(self.project_box, style="Advanced.TFrame")
             ttk.Label(
                 self.resume_row,
                 textvariable=self.resume_var,
-                style="Muted.TLabel",
+                style="SurfaceMuted.TLabel",
             ).pack(side="left", fill="x", expand=True)
             self.resume_button = ttk.Button(
                 self.resume_row,
@@ -186,18 +275,29 @@ def main(*, ui_self_test: bool = False) -> int:
             )
             self.resume_button.pack(side="right", padx=(8, 0))
 
-            self.task_box = ttk.LabelFrame(self.outer, padding=16, style="Card.TLabelframe")
-            self.task_box.pack(fill="both", expand=True, pady=(12, 0))
+            ttk.Separator(self.workspace, orient="horizontal").pack(fill="x", pady=(13, 11))
+
+            self.task_box = ttk.Frame(self.workspace, style="Advanced.TFrame")
+            self.task_box.pack(fill="both", expand=True)
+            task_heading = ttk.Frame(self.task_box, style="Advanced.TFrame")
+            task_heading.pack(fill="x")
+            self.task_step_label = ttk.Label(task_heading, style="Step.TLabel")
+            self.task_step_label.pack(side="left", anchor="n", padx=(0, 12), pady=(1, 0))
+            task_copy = ttk.Frame(task_heading, style="Advanced.TFrame")
+            task_copy.pack(side="left", fill="x", expand=True)
+            self.task_title_label = ttk.Label(task_copy, style="SectionTitle.TLabel")
+            self.task_title_label.pack(anchor="w")
             self.task_hint_label = ttk.Label(
-                self.task_box,
-                style="Hint.TLabel",
+                task_copy,
+                style="SurfaceHint.TLabel",
                 justify="left",
-                wraplength=790,
+                wraplength=650,
             )
-            self.task_hint_label.pack(anchor="w", pady=(0, 8))
+            self.task_hint_label.pack(anchor="w", pady=(2, 0))
+
             self.task = tk.Text(
                 self.task_box,
-                height=6,
+                height=5,
                 wrap="word",
                 font=("Segoe UI", 11),
                 bg="#fbfcfe",
@@ -207,22 +307,24 @@ def main(*, ui_self_test: bool = False) -> int:
                 borderwidth=1,
                 highlightthickness=1,
                 highlightbackground="#dfe4ec",
-                highlightcolor="#8aa4ff",
+                highlightcolor="#7997ff",
                 padx=12,
                 pady=10,
             )
-            self.task.pack(fill="both", expand=True)
+            self.task.pack(fill="both", expand=True, pady=(9, 0))
             task_actions = ttk.Frame(self.task_box, style="Advanced.TFrame")
-            task_actions.pack(fill="x", pady=(10, 0))
+            task_actions.pack(fill="x", pady=(9, 0))
+            self.start_helper_label = ttk.Label(task_actions, style="SurfaceMuted.TLabel")
+            self.start_helper_label.pack(side="left", anchor="center")
             self.start_button = ttk.Button(
                 task_actions,
                 command=self.start,
-                style="Primary.TButton",
+                style="Start.TButton",
             )
             self.start_button.pack(side="right")
 
             self.utility_row = ttk.Frame(self.outer, style="App.TFrame")
-            self.utility_row.pack(fill="x", pady=(10, 0))
+            self.utility_row.pack(fill="x", pady=(8, 0))
             self.advanced_toggle = ttk.Button(
                 self.utility_row,
                 command=self._toggle_advanced,
@@ -264,12 +366,6 @@ def main(*, ui_self_test: bool = False) -> int:
                 style="Link.TButton",
             )
             self.diagnose_button.pack(side="left")
-            self.demo_button = ttk.Button(
-                utility_tools,
-                command=self.create_demo,
-                style="Link.TButton",
-            )
-            self.demo_button.pack(side="left", padx=(6, 0))
             self.refresh_resume_button = ttk.Button(
                 utility_tools,
                 command=self.refresh_resume,
@@ -355,7 +451,7 @@ def main(*, ui_self_test: bool = False) -> int:
         def _toggle_details(self) -> None:
             self.details_visible = not self.details_visible
             if self.details_visible:
-                self.details_panel.pack(fill="x", pady=(6, 0), before=self.task_box)
+                self.details_panel.pack(fill="x", pady=(6, 0), before=self.utility_row)
             else:
                 self.details_panel.pack_forget()
             self._update_toggle_labels()
