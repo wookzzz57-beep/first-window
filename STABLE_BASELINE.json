@@ -1,30 +1,30 @@
 {
   "schema_version": 1,
   "project": "FirstWindow",
-  "baseline_id": "v0.4.2-stable",
+  "baseline_id": "v0.4.3-stable",
   "status": "stable-frozen",
-  "frozen_from_main_sha": "2a24cc751b02cdde2c85575e5519e357d938c92b",
+  "frozen_from_main_sha": "fa53893421b34736118c4cebd3df88432b33b7d2",
   "runtime_release": {
-    "version": "0.4.2",
-    "tag": "v0.4.2",
-    "tag_sha": "73454bb09cfaf4c43a3fcc1a77cd3d0e80375148",
-    "release_id": 392384670,
+    "version": "0.4.3",
+    "tag": "v0.4.3",
+    "tag_sha": "c5b0b4d864d57998676585efc8505232d6008c2c",
+    "release_id": 392790362,
     "exe": {
       "name": "FirstWindow-Windows-x64.exe",
-      "asset_id": 576558156,
-      "size": 11636647,
-      "sha256": "953f5f260439976d46db4f6b81dd3a74afca83e006edd0d3daf0c24b538b11b0"
+      "asset_id": 578591647,
+      "size": 11638563,
+      "sha256": "3696420971ad124cd63ed76eb02acce2d338c5a7276b7208fce33905d04865b4"
     },
     "checksum": {
       "name": "SHA256SUMS.txt",
-      "asset_id": 576558161,
+      "asset_id": 578591648,
       "size": 95,
-      "sha256": "adb5473f60d270dfea02ac9a613a46e415765e239ca034b69c8b4d01137ab2af"
+      "sha256": "e54039d2364ee4268b409affc31f58e32b8dc0dc4e2777890ee302ce7b62537c"
     },
     "files": [
       {
         "path": "pyproject.toml",
-        "git_blob_sha": "214dee525a5c92fee734813c687f312229cc2738",
+        "git_blob_sha": "8e24e19e6b87dafddf1e685897d602dd0782b4ee",
         "size": 486
       },
       {
@@ -34,7 +34,7 @@
       },
       {
         "path": "src/firstwindow/__init__.py",
-        "git_blob_sha": "82fad997765f6d64aad88e3899f7071d8a9b1e31",
+        "git_blob_sha": "e0c3ee49ec5f4a7ac82a2c0e713f021b31272c7f",
         "size": 86
       },
       {
@@ -64,8 +64,8 @@
       },
       {
         "path": "src/firstwindow/gui.py",
-        "git_blob_sha": "7880acaab268dbbb3092fe086fc2262de0cc2dae",
-        "size": 57373
+        "git_blob_sha": "d414f6f3f1a753ec5626d80002e6ef7d3c465230",
+        "size": 64461
       },
       {
         "path": "src/firstwindow/hermes_agnes.py",
@@ -74,8 +74,8 @@
       },
       {
         "path": "src/firstwindow/i18n.py",
-        "git_blob_sha": "af98e78beae3f51f32547931438502475d5d2e9a",
-        "size": 21909
+        "git_blob_sha": "1539ab809ba0b19d11e86743dae833d53c818dcc",
+        "size": 22399
       },
       {
         "path": "src/firstwindow/onboarding.py",
@@ -120,17 +120,21 @@
     ]
   },
   "public_surface": {
-    "accepted_main_sha": "2a24cc751b02cdde2c85575e5519e357d938c92b",
+    "accepted_main_sha": "fa53893421b34736118c4cebd3df88432b33b7d2",
     "production_url": "https://firstwindow-public.vercel.app",
     "production_deployment_id": "dpl_G7TPV8JNzKspE1aoBjMm6w8jPcaW",
-    "external_verify_run": 35504289632,
+    "production_status": "external-sync-pending-v0.4.3",
+    "production_observed_version": "0.4.2",
+    "production_verified_via": "DNS-over-HTTPS + curl --resolve with valid Host/SNI on 2026-09-21",
+    "external_verify_run": null,
     "real_capture_png_sha256": "02a54467d2208a05a0dfe6b5a60fc68cc25620b491c01bbdd50a73915979e3b5",
     "real_capture_gif_sha256": "a973fce2b6bef560b7e4c90b0e0b8955abd56a97467cf2c5315e12b3118daac1",
+    "capture_provenance": "Historical packaged v0.4.2 captures; intentionally not relabeled as v0.4.3.",
     "files": [
       {
         "path": "README.md",
-        "git_blob_sha": "06d49b168bd306f557131047605a5e37d37b10ce",
-        "size": 10118
+        "git_blob_sha": "3950bf8d7ddb45197b2c867d918d5894d673f8d1",
+        "size": 10251
       },
       {
         "path": "docs/assets/firstwindow-startup.gif",
@@ -149,8 +153,8 @@
       },
       {
         "path": "site/index.html",
-        "git_blob_sha": "2727be497fe68e5641bdf913fdd6998b25d92966",
-        "size": 7093
+        "git_blob_sha": "4440d7f92cd5f8796f11659358c316a70e3603d4",
+        "size": 7154
       },
       {
         "path": "site/styles.css",
@@ -165,12 +169,12 @@
     ]
   },
   "control_contract": {
-    "current_release": "v0.4.2",
+    "current_release": "v0.4.3",
     "status": "post-release",
     "product_baseline_frozen": true,
     "active_engineering_issue": null,
     "engineering_queue": [],
     "launch_issue": 17,
-    "mutation_rule": "Any intentional runtime or public-surface change must be promoted as scoped engineering, pass acceptance, and establish a new accepted baseline before this manifest is updated."
+    "mutation_rule": "Any intentional runtime or accepted GitHub/public-source change must be promoted as scoped engineering, pass acceptance, and establish a new accepted baseline before this manifest is updated. External production deployment sync is tracked separately and must not be misreported as complete."
   }
 }
