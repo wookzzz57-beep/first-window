@@ -35,6 +35,8 @@ def _actual_public_paths(root: Path) -> set[str]:
         {
             "docs/assets/firstwindow-window.png",
             "docs/assets/firstwindow-startup.gif",
+            "docs/assets/firstwindow-window-v043.png",
+            "docs/assets/firstwindow-startup-v043.gif",
         }
     )
     return paths
