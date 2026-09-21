@@ -1356,6 +1356,10 @@ def main(*, ui_self_test: bool = False) -> int:
             require(not app.task.get("1.0", "end").strip(), 42)
             assert_beginner_surface(app, root, app.language)
 
+            # The minimum-size acceptance target applies to the default beginner
+            # path. Advanced diagnostics may use the normal default window.
+            root.geometry("940x760")
+            root.update()
             app._toggle_advanced()
             root.update_idletasks()
             require(bool(app.advanced_panel.winfo_ismapped()), 50)
