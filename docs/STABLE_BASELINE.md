@@ -31,6 +31,9 @@ Those files are also pinned by Git blob SHA.
 
 While v0.4.2 remains the stable product baseline:
 
+> During an explicit scoped engineering or release-candidate transition, source runtime files — including the package version — may intentionally differ from the last released baseline. The old release identity remains pinned until a new tag/release is published and accepted. Returning to post-release/frozen state re-enables exact version and file matching.
+
+
 - `PROJECT_STATE.status == "post-release"`
 - `current_release == "v0.4.2"`
 - `active_engineering_issue == null`

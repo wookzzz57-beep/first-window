@@ -80,10 +80,6 @@ def validate_stable_baseline(root: Path = ROOT, manifest_path: Path = MANIFEST) 
 
     runtime = baseline["runtime_release"]
     project = tomllib.loads((root / "pyproject.toml").read_text(encoding="utf-8"))["project"]
-    if project["version"] != runtime["version"]:
-        failures.append(
-            f"package version drift: expected={runtime['version']} actual={project['version']}"
-        )
 
     state = json.loads((root / "PROJECT_STATE.json").read_text(encoding="utf-8"))
     contract = baseline["control_contract"]
@@ -109,6 +105,10 @@ def validate_stable_baseline(root: Path = ROOT, manifest_path: Path = MANIFEST) 
     )
 
     if frozen:
+        if project["version"] != runtime["version"]:
+            failures.append(
+                f"package version drift: expected={runtime['version']} actual={project['version']}"
+            )
         failures.extend(
             _check_files(root, runtime["files"], _actual_runtime_paths(root), "runtime")
         )
