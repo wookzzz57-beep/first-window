@@ -10,6 +10,7 @@ from firstwindow.advanced_handoff import (
     AGNES_IMAGE_MODEL,
     AGNES_VIDEO_MODEL,
     DIRECT_HERMES_COMMAND,
+    HANDOFF_MARKER_FILENAME,
     IMAGE_PLUGIN_KEY,
     STANDALONE_HERMES_PROFILE,
     VIDEO_PLUGIN_KEY,
@@ -106,6 +107,7 @@ class AdvancedHandoffTests(unittest.TestCase):
             self.assertEqual(fake.values["image_gen.model"], AGNES_IMAGE_MODEL)
             self.assertEqual(fake.values["video_gen.model"], AGNES_VIDEO_MODEL)
             self.assertEqual(fake.values["toolsets"], ["hermes-cli", "video_gen"])
+            self.assertTrue((profile / HANDOFF_MARKER_FILENAME).is_file())
             self.assertIn("existing/plugin", fake.values["plugins.enabled"])
             self.assertIn(IMAGE_PLUGIN_KEY, fake.values["plugins.enabled"])
             self.assertIn(VIDEO_PLUGIN_KEY, fake.values["plugins.enabled"])
@@ -132,6 +134,41 @@ class AdvancedHandoffTests(unittest.TestCase):
             self.assertTrue(result.route.ready)
             self.assertTrue(result.image_plugin_ready)
             self.assertTrue(result.video_plugin_ready)
+
+    def test_existing_unmanaged_profile_is_not_mutated(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            profile = Path(tmp) / "agneshermes"
+            profile.mkdir(parents=True)
+            fake = FakeHermes(profile)
+            fake.exists = True
+            result = ensure_standalone_agnes_hermes(
+                "must-not-be-written",
+                which=lambda _name: "hermes",
+                runner=fake,
+            )
+            self.assertFalse(result.ready)
+            self.assertEqual(result.reason, "profile-name-conflict-unmanaged")
+            self.assertFalse((profile / ".env").exists())
+            self.assertFalse(any(cmd[:3] == ["hermes", "config", "set"] for cmd in fake.commands))
+
+    def test_repair_preserves_user_added_toolsets(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            profile = Path(tmp) / "agneshermes"
+            fake = FakeHermes(profile)
+            first = ensure_standalone_agnes_hermes(
+                "valid-secret",
+                which=lambda _name: "hermes",
+                runner=fake,
+            )
+            self.assertTrue(first.ready, first.reason)
+            fake.values["toolsets"] = ["web", "hermes-cli", "video_gen"]
+            repaired = ensure_standalone_agnes_hermes(
+                None,
+                which=lambda _name: "hermes",
+                runner=fake,
+            )
+            self.assertTrue(repaired.ready, repaired.reason)
+            self.assertEqual(fake.values["toolsets"], ["web", "hermes-cli", "video_gen"])
 
     def test_config_failure_fails_closed(self):
         with tempfile.TemporaryDirectory() as tmp:
