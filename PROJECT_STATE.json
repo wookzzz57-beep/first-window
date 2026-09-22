@@ -49,7 +49,7 @@
   },
   "control_board_issue": 8,
   "wip_limit": 1,
-  "resume_point": "Issue #61 promoted to engineering from main cb386d658714602848f7836dceb5318de4dcab59. Design decision: keep the beginner path unchanged; add a separate standalone Hermes profile for Agnes, use Hermes native image/video provider plugins instead of the uploaded MCP bridge, preserve secret isolation and empty fallbacks. Next: implement profile/plugin generation and advanced GUI handoff, then run repository and Windows package gates.",
+  "resume_point": "Issue #61 / PR #62 contains the standalone Agnes + Hermes advanced handoff. Existing f73fb8 PR CI and Windows build passed. README homepage copy is being added to the same scoped engineering PR; verify fresh final-head CI and Windows packaged tests, then review/merge. The current public EXE remains v0.4.3 with no advanced button. Live Agnes image/video generation on a target Windows machine remains an independent, unverified runtime/release gate. PR #64 is an abandoned docs-only attempt because README is protected by the v0.4.3 frozen public baseline; close it after PR #62 is accepted.",
   "last_verified_main_sha": "cb386d658714602848f7836dceb5318de4dcab59",
   "evidence": {
     "main_linux_ci_run": 35438404706,
