@@ -1298,10 +1298,15 @@ def main(*, ui_self_test: bool = False) -> int:
                                 ),
                             )
                         else:
-                            self._append(self._tr("advanced.handoff_failed", reason=result.reason))
+                            failure_text = (
+                                self._tr("advanced.handoff_conflict")
+                                if result.reason == "profile-name-conflict-unmanaged"
+                                else self._tr("advanced.handoff_failed", reason=result.reason)
+                            )
+                            self._append(failure_text)
                             messagebox.showerror(
                                 self._tr("advanced.handoff_title"),
-                                self._tr("advanced.handoff_failed", reason=result.reason),
+                                failure_text,
                             )
                     elif kind == "standalone_handoff_error":
                         self.handoff_button.configure(state="normal")
