@@ -373,6 +373,12 @@ def main(*, ui_self_test: bool = False) -> int:
                 style="Link.TButton",
             )
             self.refresh_resume_button.pack(side="left", padx=(6, 0))
+            self.handoff_button = ttk.Button(
+                utility_tools,
+                command=self.setup_advanced_handoff,
+                style="Secondary.TButton",
+            )
+            self.handoff_button.pack(side="right")
 
             manual = ttk.Frame(self.advanced_panel, style="Advanced.TFrame")
             manual.pack(fill="x", pady=(8, 0))
@@ -407,22 +413,6 @@ def main(*, ui_self_test: bool = False) -> int:
                 style="Link.TButton",
             )
             self.hermes_cli_button.pack(side="left")
-
-            handoff_row = ttk.Frame(self.advanced_panel, style="Advanced.TFrame")
-            handoff_row.pack(fill="x", pady=(10, 0))
-            self.handoff_label = ttk.Label(
-                handoff_row,
-                style="Muted.TLabel",
-                justify="left",
-                wraplength=600,
-            )
-            self.handoff_label.pack(side="left", fill="x", expand=True)
-            self.handoff_button = ttk.Button(
-                handoff_row,
-                command=self.setup_advanced_handoff,
-                style="Secondary.TButton",
-            )
-            self.handoff_button.pack(side="right", padx=(8, 0))
 
             self.details_panel = ttk.Frame(self.outer, style="App.TFrame")
             self.technical_box = ttk.LabelFrame(self.details_panel, padding=12, style="Card.TLabelframe")
@@ -508,7 +498,6 @@ def main(*, ui_self_test: bool = False) -> int:
             self.advanced_label.configure(text=self._tr("label.advanced"))
             self.agnes_cli_button.configure(text=self._tr("button.agnes_cli"))
             self.hermes_cli_button.configure(text=self._tr("button.hermes_cli"))
-            self.handoff_label.configure(text=self._tr("advanced.handoff_hint"))
             self.handoff_button.configure(text=self._tr("button.configure_standalone"))
             self.browse_button.configure(text=self._tr("button.browse"))
             self.demo_button.configure(text=self._tr("button.create_demo"))
