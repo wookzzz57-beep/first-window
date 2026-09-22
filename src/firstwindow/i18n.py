@@ -292,6 +292,7 @@ TRANSLATIONS["en"].update({
     "advanced.handoff_ready_log": "Standalone Agnes + Hermes is configured. Direct launch: {command}",
     "advanced.handoff_ready": "Standalone Agnes + Hermes is configured.\n\nYou can now close FirstWindow and run:\n\n{command}\n\nText/vision routing and the Agnes image/video provider plugins are configured. Actual media API availability and billing remain account-dependent.",
     "advanced.handoff_failed": "Standalone Agnes + Hermes was not marked ready: {reason}",
+    "advanced.handoff_conflict": "A Hermes profile named 'agneshermes' already exists and was not created by FirstWindow. Nothing was changed. Rename or delete that profile, or keep using it manually, then run this setup again.",
 })
 TRANSLATIONS["zh-CN"].update({
     "button.configure_standalone": "配置独立 Agnes + Hermes",
@@ -304,6 +305,7 @@ TRANSLATIONS["zh-CN"].update({
     "advanced.handoff_ready_log": "独立 Agnes + Hermes 已配置。直接启动命令：{command}",
     "advanced.handoff_ready": "独立 Agnes + Hermes 已配置。\n\n现在可以关闭 FirstWindow，直接运行：\n\n{command}\n\n文本/视觉路由以及 Agnes 生图/生视频 Provider 插件都已配置。实际媒体 API 可用性与计费仍取决于 Agnes 账号。",
     "advanced.handoff_failed": "独立 Agnes + Hermes 尚未达到就绪状态：{reason}",
+    "advanced.handoff_conflict": "已经存在一个名为“agneshermes”的 Hermes profile，但它不是由 FirstWindow 创建的。为避免覆盖你的配置，本次没有修改任何内容。请先重命名/删除该 profile，或继续手动使用它，再重新执行此设置。",
 })
 
 
