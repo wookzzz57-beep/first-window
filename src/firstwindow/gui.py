@@ -12,6 +12,7 @@ import traceback
 import uuid
 import webbrowser
 
+from .advanced_handoff import ensure_standalone_agnes_hermes
 from .bootstrap import INSTALLER_TIMEOUT_SECONDS, install_command, run_installer_command
 from .demo_project import create_demo_project
 from .distribution import beginner_setup_action
@@ -407,6 +408,22 @@ def main(*, ui_self_test: bool = False) -> int:
             )
             self.hermes_cli_button.pack(side="left")
 
+            handoff_row = ttk.Frame(self.advanced_panel, style="Advanced.TFrame")
+            handoff_row.pack(fill="x", pady=(10, 0))
+            self.handoff_label = ttk.Label(
+                handoff_row,
+                style="Muted.TLabel",
+                justify="left",
+                wraplength=600,
+            )
+            self.handoff_label.pack(side="left", fill="x", expand=True)
+            self.handoff_button = ttk.Button(
+                handoff_row,
+                command=self.setup_advanced_handoff,
+                style="Secondary.TButton",
+            )
+            self.handoff_button.pack(side="right", padx=(8, 0))
+
             self.details_panel = ttk.Frame(self.outer, style="App.TFrame")
             self.technical_box = ttk.LabelFrame(self.details_panel, padding=12, style="Card.TLabelframe")
             self.technical_box.pack(fill="x")
@@ -491,6 +508,8 @@ def main(*, ui_self_test: bool = False) -> int:
             self.advanced_label.configure(text=self._tr("label.advanced"))
             self.agnes_cli_button.configure(text=self._tr("button.agnes_cli"))
             self.hermes_cli_button.configure(text=self._tr("button.hermes_cli"))
+            self.handoff_label.configure(text=self._tr("advanced.handoff_hint"))
+            self.handoff_button.configure(text=self._tr("button.configure_standalone"))
             self.browse_button.configure(text=self._tr("button.browse"))
             self.demo_button.configure(text=self._tr("button.create_demo"))
             self.refresh_resume_button.configure(text=self._tr("button.refresh_resume"))
@@ -891,6 +910,41 @@ def main(*, ui_self_test: bool = False) -> int:
             self.refresh()
             self.root.after(100, self.setup_zero_path)
 
+        def setup_advanced_handoff(self) -> None:
+            self._refresh_runtime_paths()
+            if shutil.which("hermes") is None:
+                messagebox.showinfo(self._tr("dialog.hermes"), self._tr("error.install_hermes_first"))
+                return
+            if not messagebox.askyesno(
+                self._tr("advanced.handoff_title"),
+                self._tr("advanced.handoff_confirm"),
+            ):
+                return
+            secret = simpledialog.askstring(
+                self._tr("advanced.handoff_key_title"),
+                self._tr("advanced.handoff_key_prompt"),
+                show="*",
+                parent=self.root,
+            )
+            if secret is None:
+                return
+
+            self.handoff_button.configure(state="disabled")
+            self._append(self._tr("advanced.handoff_running"))
+
+            def worker(explicit_key: str) -> None:
+                try:
+                    result = ensure_standalone_agnes_hermes(explicit_key)
+                except Exception as exc:
+                    self.events.put(("standalone_handoff_error", str(exc)))
+                    return
+                finally:
+                    explicit_key = ""
+                self.events.put(("standalone_handoff_done", result))
+
+            threading.Thread(target=worker, args=(secret,), daemon=True).start()
+            secret = ""
+
         def _prepare_agnes_profile(self) -> None:
             self.one_click_button.configure(state="disabled")
             self._append(self._tr("setup.agnes_profile_preparing"))
@@ -1237,6 +1291,33 @@ def main(*, ui_self_test: bool = False) -> int:
                         self._append(self._tr("setup.agnes_profile_failed", reason=payload))
                         messagebox.showerror(self._tr("dialog.setup"), str(payload))
                         self.refresh()
+                    elif kind == "standalone_handoff_done":
+                        result = payload
+                        self.handoff_button.configure(state="normal")
+                        if result.ready:
+                            self._append(
+                                self._tr(
+                                    "advanced.handoff_ready_log",
+                                    command=result.direct_command,
+                                )
+                            )
+                            messagebox.showinfo(
+                                self._tr("advanced.handoff_title"),
+                                self._tr(
+                                    "advanced.handoff_ready",
+                                    command=result.direct_command,
+                                ),
+                            )
+                        else:
+                            self._append(self._tr("advanced.handoff_failed", reason=result.reason))
+                            messagebox.showerror(
+                                self._tr("advanced.handoff_title"),
+                                self._tr("advanced.handoff_failed", reason=result.reason),
+                            )
+                    elif kind == "standalone_handoff_error":
+                        self.handoff_button.configure(state="normal")
+                        self._append(self._tr("advanced.handoff_failed", reason=payload))
+                        messagebox.showerror(self._tr("advanced.handoff_title"), str(payload))
                     elif kind == "installer_blocked":
                         target, reason = payload
                         self.one_click_button.configure(state="normal")
@@ -1364,6 +1445,11 @@ def main(*, ui_self_test: bool = False) -> int:
             root.update_idletasks()
             require(bool(app.advanced_panel.winfo_ismapped()), 50)
             require(bool(app.runtime_combo.winfo_ismapped()), 51)
+            require(bool(app.handoff_button.winfo_ismapped()), 53)
+            require(
+                app.handoff_button.cget("text") == translate(app.language, "button.configure_standalone"),
+                54,
+            )
             app._toggle_advanced()
             app._toggle_details()
             root.update_idletasks()
