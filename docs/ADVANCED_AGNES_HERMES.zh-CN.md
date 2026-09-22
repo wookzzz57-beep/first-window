@@ -86,3 +86,5 @@ FirstWindow 新手模式
 **FirstWindow → 高级 → 配置独立 Agnes + Hermes**
 
 该流程会修复专用 `agneshermes` profile，不修改 `firstwindowzero` 新手 profile，也不会复制其他 Provider 凭据。
+
+如果电脑上已经存在一个同名 `agneshermes` profile，但它不是 FirstWindow 创建的，流程会 fail closed：不覆盖、不写 Key、不改配置。请先重命名/删除该 profile，或继续手动使用它，再重新执行高级交接。
