@@ -1,7 +1,7 @@
 # FirstWindow
 
 <p align="center">
-  <strong>Your first Windows coding agent — powered by Hermes Agent + Agnes AI.</strong><br>
+  <strong>Your first coding agent for Windows — powered by Hermes Agent + Agnes AI.</strong><br>
   Free-first, beginner-first: one window to start, and a clear path to native Hermes when you are ready.<br>
   面向 Windows 新手的免费优先 AI Agent 入口：一键就绪，学会后可进阶原生 Hermes。
 </p>
