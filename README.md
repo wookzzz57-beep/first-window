@@ -1,8 +1,9 @@
 # FirstWindow
 
 <p align="center">
-  <strong>Your first coding agent for Windows.</strong><br>
-  Start from one window: get ready → choose a folder → describe the task.
+  <strong>Your first coding agent for Windows — powered by Hermes Agent + Agnes AI.</strong><br>
+  Free-first, beginner-first: one window to start, and a clear path to native Hermes when you are ready.<br>
+  面向 Windows 新手的免费优先 AI Agent 入口：一键就绪，学会后可进阶原生 Hermes。
 </p>
 
 <p align="center">
@@ -18,6 +19,8 @@
   ·
   <a href="https://firstwindow-public.vercel.app">Website</a>
   ·
+  <a href="docs/ADVANCED_AGNES_HERMES.md">Advanced handoff (source only)</a>
+  ·
   <a href="docs/BEGINNER.md">Beginner Guide</a>
   ·
   <a href="docs/BEGINNER.zh-CN.md">简体中文教程</a>
@@ -29,7 +32,30 @@
 
 ## Coding agents should not require an agent course
 
-FirstWindow is a **beginner-first Windows launcher for coding agents**. It keeps provider setup, route checks, recovery state, and verification behind a small GUI so a new user can focus on the task instead of the plumbing.
+FirstWindow is a **beginner-first, free-first Windows desktop launcher** built on [Hermes Agent](https://github.com/NousResearch/hermes-agent) and [Agnes AI](https://github.com/AgnesAI-Labs/AgnesAI-Models). It brings setup, guarded model routing, resumable execution, and evidence-based verification into one small GUI. **It does not train a new model or replace Hermes.**
+
+**中文简介：** FirstWindow 站在 Agnes + Hermes 的肩膀上，把安装配置、免费优先路由、断点恢复和验收放进一个 Windows 窗口，让第一次接触 Agent 的用户也能开始完成真实任务。它不是第三套 Agent 引擎，也不会锁定高级用户。
+
+### Built on Agnes + Hermes
+
+| Foundation | What it contributes |
+| --- | --- |
+| [Hermes Agent](https://github.com/NousResearch/hermes-agent) | The actual agent runtime: reasoning loop, task execution, tools, coding workflows, and native profiles. |
+| [Agnes AI](https://github.com/AgnesAI-Labs/AgnesAI-Models) | The optional cloud model/API route. Its API family covers text and image understanding, with separate image and video generation endpoints. |
+| **FirstWindow** | Beginner onboarding, explicit route/cost checks, project-scoped tasks, checkpoints, resume, evidence, and independent acceptance. |
+
+### Choose your path
+
+| New to agents — **available in v0.4.3** | Growing beyond the GUI — **advanced handoff in source, not yet released** |
+| --- | --- |
+| Download the Windows app, select a project folder, describe the task, and use **Start / Continue**. | The [advanced setup](docs/ADVANCED_AGNES_HERMES.md) in the current source prepares a separate `agneshermes` Hermes profile with Agnes text/vision and independent image/video backends. After configuration, you can close FirstWindow and use `hermes -p agneshermes chat`. |
+| FirstWindow retains its guarded `$0` confirmation, recovery, and evidence gates. | Direct native Hermes use is outside FirstWindow’s runtime `$0` guard. API availability and media-generation costs depend on your Agnes account. |
+
+> **Release status:** The downloadable **v0.4.3 EXE does not include the advanced handoff button**. Advanced setup is available from the current source (`pip install -e .` followed by `firstwindow-gui`); see the [English](docs/ADVANCED_AGNES_HERMES.md) or [中文](docs/ADVANCED_AGNES_HERMES.zh-CN.md) guide. Local configuration checks do **not** prove that live Agnes image/video calls work or are free for every account.
+
+### What “$0” means
+
+FirstWindow is **free and open source (MIT)**. Its beginner `$0` mode requires explicit confirmation of an eligible free route and **fails closed** rather than silently switching to an unknown-cost provider. **Agnes API access, free quotas, rate limits, and image/video billing are account-dependent**; FirstWindow does not make a paid API free. Direct Hermes use after the advanced handoff does not inherit FirstWindow’s runtime cost guard.
 
 ### Start in 3 steps
 
@@ -87,7 +113,7 @@ FirstWindow owns onboarding, routing, durable state, and acceptance. **Hermes Ag
 
 For the Agnes route, FirstWindow uses an isolated Hermes profile, disables silent provider fallback, requires explicit free-route confirmation, runs a live readiness probe, and validates provider/model usage evidence.
 
-Direct Agnes CLI is not required for the beginner path; it remains an advanced/manual option.
+Direct Agnes CLI is not required for the beginner path. Native Hermes is a separate advanced option: [follow the standalone Agnes + Hermes handoff guide](docs/ADVANCED_AGNES_HERMES.md). The opt-in feature is available in source, not the published v0.4.3 binary. It creates an independent profile rather than modifying the beginner profile.
 
 
 ## Execution architecture

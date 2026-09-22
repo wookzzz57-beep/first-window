@@ -1,13 +1,15 @@
 {
   "schema_version": 1,
   "project": "FirstWindow",
-  "phase": "v0.4.3-post-release",
-  "status": "post-release",
+  "phase": "v0.5.0-engineering-advanced-handoff",
+  "status": "active",
   "canonical_branch": "main",
   "current_release": "v0.4.3",
-  "primary_objective": "Resume issue #17 from the accepted v0.4.3 GitHub runtime/public-surface baseline. The GitHub homepage now uses real packaged v0.4.3 captures; keep external Vercel v0.4.3 synchronization tracked separately until independently verified.",
-  "active_engineering_issue": null,
-  "engineering_queue": [],
+  "primary_objective": "Implement issue #61: an opt-in advanced handoff that prepares a standalone Agnes + Hermes profile, including native Hermes image/video provider plugins, while preserving the v0.4.3 beginner baseline and $0 safety boundaries.",
+  "active_engineering_issue": 61,
+  "engineering_queue": [
+    61
+  ],
   "completed_engineering_issues": [
     4,
     5,
@@ -36,19 +38,19 @@
       "id": "EXP-003",
       "issue": 17,
       "channel": "TikTok",
-      "status": "draft-paused-ready-for-v0.4.3-media-reconciliation",
+      "status": "paused-for-issue-61-engineering",
       "published_url": null,
       "product_baseline_frozen": true,
-      "engineering_wip": 0,
+      "engineering_wip": 1,
       "metricool_post_uuid": "-8200387215097377077",
       "metricool_post_id": 379227355,
-      "next_action": "Issue #58 is accepted. Keep the existing TikTok item draft until its media is explicitly replaced/reconciled with the accepted real v0.4.3 capture; do not activate a second launch experiment."
+      "next_action": "Resume only after issue #61 is verified and the accepted product baseline is re-established."
     }
   },
   "control_board_issue": 8,
   "wip_limit": 1,
-  "resume_point": "Issue #58 GitHub homepage refresh is accepted. PR #59 merged at 0622d28aea287e063d1f426b0dabc45c9d8d5158; PR CI #350 and Windows #133 passed; post-merge main CI #351 and Windows #134 passed. Repository Description is version-neutral. README now uses versioned real v0.4.3 PNG/GIF captured from the official Release 392790362 EXE after SHA-256 verification; historical v0.4.2 capture files remain unchanged for provenance/site history. Runtime v0.4.3 baseline is unchanged. Vercel production remains a separate external sync blocker.",
-  "last_verified_main_sha": "0622d28aea287e063d1f426b0dabc45c9d8d5158",
+  "resume_point": "Issue #61 / PR #62 contains the standalone Agnes + Hermes advanced handoff. Existing f73fb8 PR CI and Windows build passed. README homepage copy is being added to the same scoped engineering PR; verify fresh final-head CI and Windows packaged tests, then review/merge. The current public EXE remains v0.4.3 with no advanced button. Live Agnes image/video generation on a target Windows machine remains an independent, unverified runtime/release gate. PR #64 is an abandoned docs-only attempt because README is protected by the v0.4.3 frozen public baseline; close it after PR #62 is accepted.",
+  "last_verified_main_sha": "cb386d658714602848f7836dceb5318de4dcab59",
   "evidence": {
     "main_linux_ci_run": 35438404706,
     "main_linux_ci": "success",

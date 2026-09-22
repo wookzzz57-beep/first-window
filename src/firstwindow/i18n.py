@@ -281,6 +281,34 @@ TRANSLATIONS["zh-CN"].update({
 })
 
 
+TRANSLATIONS["en"].update({
+    "button.configure_standalone": "Configure Agnes + Hermes",
+    "advanced.handoff_hint": "Graduate to native Hermes: prepare an independent Agnes profile with text/vision plus image/video generation.",
+    "advanced.handoff_title": "Standalone Agnes + Hermes",
+    "advanced.handoff_confirm": "This creates or repairs a separate Hermes profile named 'agneshermes'. It does not change FirstWindow's beginner profile.\n\nThe profile uses Agnes for the model and media backends, disables model fallbacks, and stores the API key only inside that profile. Image/video availability and billing still depend on your Agnes account. Continue?",
+    "advanced.handoff_key_title": "Agnes API key for standalone Hermes",
+    "advanced.handoff_key_prompt": "Paste the Agnes API key for the standalone 'agneshermes' profile. FirstWindow will not copy a key from another Hermes profile.",
+    "advanced.handoff_running": "Preparing standalone Agnes + Hermes profile and native media provider plugins...",
+    "advanced.handoff_ready_log": "Standalone Agnes + Hermes is configured. Direct launch: {command}",
+    "advanced.handoff_ready": "Standalone Agnes + Hermes is configured.\n\nYou can now close FirstWindow and run:\n\n{command}\n\nText/vision routing and the Agnes image/video provider plugins are configured. Actual media API availability and billing remain account-dependent.",
+    "advanced.handoff_failed": "Standalone Agnes + Hermes was not marked ready: {reason}",
+    "advanced.handoff_conflict": "A Hermes profile named 'agneshermes' already exists and was not created by FirstWindow. Nothing was changed. Rename or delete that profile, or keep using it manually, then run this setup again.",
+})
+TRANSLATIONS["zh-CN"].update({
+    "button.configure_standalone": "配置独立 Agnes + Hermes",
+    "advanced.handoff_hint": "进阶模式：生成可脱离 FirstWindow 使用的独立 Hermes 配置，接入 Agnes 文本/视觉与生图/生视频能力。",
+    "advanced.handoff_title": "独立 Agnes + Hermes",
+    "advanced.handoff_confirm": "这会创建或修复名为“agneshermes”的独立 Hermes profile，不会修改 FirstWindow 的新手 profile。\n\n该 profile 会使用 Agnes 作为模型和媒体后端、关闭模型 fallback，并把 API Key 只保存在这个独立 profile 中。生图/生视频是否可用以及是否收费仍以你的 Agnes 账号为准。继续吗？",
+    "advanced.handoff_key_title": "独立 Hermes 使用的 Agnes API Key",
+    "advanced.handoff_key_prompt": "粘贴给独立“agneshermes”profile 使用的 Agnes API Key。FirstWindow 不会从其他 Hermes profile 复制 Key。",
+    "advanced.handoff_running": "正在准备独立 Agnes + Hermes profile 与原生媒体 Provider 插件…",
+    "advanced.handoff_ready_log": "独立 Agnes + Hermes 已配置。直接启动命令：{command}",
+    "advanced.handoff_ready": "独立 Agnes + Hermes 已配置。\n\n现在可以关闭 FirstWindow，直接运行：\n\n{command}\n\n文本/视觉路由以及 Agnes 生图/生视频 Provider 插件都已配置。实际媒体 API 可用性与计费仍取决于 Agnes 账号。",
+    "advanced.handoff_failed": "独立 Agnes + Hermes 尚未达到就绪状态：{reason}",
+    "advanced.handoff_conflict": "已经存在一个名为“agneshermes”的 Hermes profile，但它不是由 FirstWindow 创建的。为避免覆盖你的配置，本次没有修改任何内容。请先重命名/删除该 profile，或继续手动使用它，再重新执行此设置。",
+})
+
+
 def normalize_language(value: str | None) -> str:
     normalized = (value or "").strip().replace("_", "-").lower()
     if normalized.startswith("zh"):
