@@ -27,6 +27,12 @@ AGNES_CHAT_BASE_URL = f"{AGNES_API_ROOT}/v1"
 IMAGE_PLUGIN_KEY = "image_gen/agnes"
 VIDEO_PLUGIN_KEY = "video_gen/agnes"
 DIRECT_HERMES_COMMAND = f"hermes -p {STANDALONE_HERMES_PROFILE} chat"
+HANDOFF_MARKER_FILENAME = ".firstwindow-advanced-handoff.json"
+_HANDOFF_MARKER = {
+    "schema_version": 1,
+    "owner": "FirstWindow",
+    "kind": "standalone-agnes-hermes",
+}
 
 
 @dataclass(frozen=True)
@@ -125,6 +131,31 @@ def install_agnes_media_plugins(profile_home: str | Path) -> tuple[Path, Path]:
     return image_root, video_root
 
 
+def _handoff_marker_path(profile_home: str | Path) -> Path:
+    return Path(profile_home) / HANDOFF_MARKER_FILENAME
+
+
+def _is_firstwindow_handoff_profile(profile_home: str | Path) -> bool:
+    try:
+        data = json.loads(_handoff_marker_path(profile_home).read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError, TypeError):
+        return False
+    return bool(
+        isinstance(data, dict)
+        and data.get("owner") == _HANDOFF_MARKER["owner"]
+        and data.get("kind") == _HANDOFF_MARKER["kind"]
+        and data.get("schema_version") == _HANDOFF_MARKER["schema_version"]
+    )
+
+
+def _mark_firstwindow_handoff_profile(profile_home: str | Path) -> None:
+    path = _handoff_marker_path(profile_home)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_name(path.name + ".tmp")
+    tmp.write_text(json.dumps(_HANDOFF_MARKER, indent=2) + "\n", encoding="utf-8")
+    tmp.replace(path)
+
+
 def _plugin_config_ready(
     profile_home: str | Path,
     *,
@@ -172,6 +203,11 @@ def read_standalone_handoff(
         return StandaloneHandoffResult(
             False, False, None, route, False, False, DIRECT_HERMES_COMMAND,
             "standalone-profile-missing" if route.hermes_installed else "hermes-not-installed",
+        )
+    if not _is_firstwindow_handoff_profile(profile_home):
+        return StandaloneHandoffResult(
+            False, False, profile_home, route, False, False, DIRECT_HERMES_COMMAND,
+            "profile-name-conflict-unmanaged",
         )
     image_ready, video_ready = _plugin_config_ready(profile_home, runner=runner)
     credential_ready = agnes_api_key_present(profile_home)
@@ -233,6 +269,22 @@ def ensure_standalone_agnes_hermes(
             False, created, None, route, False, False, DIRECT_HERMES_COMMAND, "profile-path-unavailable"
         )
 
+    if created:
+        try:
+            _mark_firstwindow_handoff_profile(profile_home)
+        except OSError:
+            route = read_hermes_agnes_route(profile_home, which=which, runner=runner)
+            return StandaloneHandoffResult(
+                False, True, profile_home, route, False, False,
+                DIRECT_HERMES_COMMAND, "profile-marker-write-failed",
+            )
+    elif not _is_firstwindow_handoff_profile(profile_home):
+        route = read_hermes_agnes_route(profile_home, which=which, runner=runner)
+        return StandaloneHandoffResult(
+            False, False, profile_home, route, False, False,
+            DIRECT_HERMES_COMMAND, "profile-name-conflict-unmanaged",
+        )
+
     if api_key is not None:
         save_agnes_api_key(profile_home, api_key)
 
@@ -244,6 +296,12 @@ def ensure_standalone_agnes_hermes(
     for key in (IMAGE_PLUGIN_KEY, VIDEO_PLUGIN_KEY):
         if key not in enabled:
             enabled.append(key)
+
+    current_toolsets = _json_value("toolsets", env=env, runner=runner)
+    toolsets = [str(item) for item in current_toolsets] if isinstance(current_toolsets, list) else []
+    for key in ("hermes-cli", "video_gen"):
+        if key not in toolsets:
+            toolsets.append(key)
 
     settings = (
         ("model.default", AGNES_MODEL),
@@ -259,7 +317,7 @@ def ensure_standalone_agnes_hermes(
         ("image_gen.model", AGNES_IMAGE_MODEL),
         ("video_gen.provider", "agnes"),
         ("video_gen.model", AGNES_VIDEO_MODEL),
-        ("toolsets", '["hermes-cli","video_gen"]'),
+        ("toolsets", json.dumps(toolsets, separators=(",", ":"))),
     )
     for key, value in settings:
         if not _set_config(key, value, env=env, runner=runner):
