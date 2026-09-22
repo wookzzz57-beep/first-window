@@ -68,3 +68,5 @@ The standalone profile still prevents silent model fallback, but it cannot promi
 Re-open FirstWindow → **Advanced** → **Configure Agnes + Hermes**.
 
 The handoff is designed to repair the dedicated `agneshermes` profile in place without modifying the beginner `firstwindowzero` profile or copying unrelated provider credentials.
+
+If a profile named `agneshermes` already exists but was not created by FirstWindow, setup fails closed and leaves it untouched. Rename/delete that profile or keep using it manually before retrying.
