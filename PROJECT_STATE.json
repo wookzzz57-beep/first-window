@@ -49,8 +49,8 @@
   },
   "control_board_issue": 8,
   "wip_limit": 1,
-  "resume_point": "Issue #61 / PR #62 contains the standalone Agnes + Hermes advanced handoff. Existing f73fb8 PR CI and Windows build passed. README homepage copy is being added to the same scoped engineering PR; verify fresh final-head CI and Windows packaged tests, then review/merge. The current public EXE remains v0.4.3 with no advanced button. Live Agnes image/video generation on a target Windows machine remains an independent, unverified runtime/release gate. PR #64 is an abandoned docs-only attempt because README is protected by the v0.4.3 frozen public baseline; close it after PR #62 is accepted.",
-  "last_verified_main_sha": "cb386d658714602848f7836dceb5318de4dcab59",
+  "resume_point": "Issue #61 implementation and GitHub homepage are merged to main at e983ee6d508ad701aef39c8932583f9b60d12193. PR #62 CI 35724930740 and Windows 35724930657 passed; post-merge main CI 35725118099 and Windows 35725118102 passed. README public main and bilingual advanced docs read-back verified. Released v0.4.3 EXE remains unchanged and DOES NOT contain advanced handoff. Next: on authorized target Windows machine, run native Hermes 'agneshermes' profile and independently verify chat/vision and image/video with cost consent. Only then build/tag next release, update frozen baseline, close #61, resume launch #17.",
+  "last_verified_main_sha": "e983ee6d508ad701aef39c8932583f9b60d12193",
   "evidence": {
     "main_linux_ci_run": 35438404706,
     "main_linux_ci": "success",
@@ -638,6 +638,33 @@
       "repository_description": "Beginner-first Windows coding agent launcher - one-click setup, fail-closed $0 routing, resumable tasks, and evidence-based verification. Hermes Agent + Agnes API.",
       "runtime_files_changed": false,
       "execution_architecture_changed": false
+    },
+    "issue_61": {
+      "status": "source-merged-config-and-packaged-gates-verified; live-media-and-new-release-pending",
+      "issue": 61,
+      "pr": 62,
+      "final_pr_head_sha": "8a68c9d7df4f3542a980f7da236d97195d28c85c",
+      "merge_sha": "e983ee6d508ad701aef39c8932583f9b60d12193",
+      "pr_ci_run": 35724930740,
+      "pr_ci": "success",
+      "pr_windows_run": 35724930657,
+      "pr_windows": "success",
+      "main_ci_run": 35725118099,
+      "main_ci": "success",
+      "main_windows_run": 35725118102,
+      "main_windows": "success",
+      "readme_public_main": "readback-verified",
+      "advanced_docs_en_zh": "readback-verified",
+      "beginner_runtime_release": "v0.4.3-unchanged",
+      "standalone_profile": "agneshermes",
+      "direct_command": "hermes -p agneshermes chat",
+      "verified_scope": "source configuration tests; isolated profile; credential boundaries; Linux CI; Windows packaging and UI language self-tests; README public main read-back",
+      "outstanding_gates": [
+        "Real target-Windows native Hermes advanced-profile execution",
+        "Real Agnes image and video API response checks with explicit account-cost consent",
+        "Release candidate build/tag and checksum verification before publishing new EXE",
+        "Post-release stable-baseline refresh and explicit closure of issue #61"
+      ]
     }
   },
   "external_blockers": [
