@@ -17,6 +17,8 @@
 <p align="center">
   <a href="https://github.com/wookzzz57-beep/first-window/releases/latest/download/FirstWindow-Windows-x64.exe"><strong>Download for Windows</strong></a>
   ·
+  <a href="https://github.com/wookzzz57-beep/first-window/actions/workflows/windows-build.yml?query=branch%3Amain">Latest development build (ZIP)</a>
+  ·
   <a href="https://firstwindow-public.vercel.app">Website</a>
   ·
   <a href="docs/ADVANCED_AGNES_HERMES.md">Advanced handoff (source only)</a>
@@ -106,6 +108,8 @@ The current **v0.4.3 Windows app** is the latest released product.
 - Independent acceptance gate: agent exit 0 does **not** automatically mean VERIFIED
 
 > The community EXE is currently **unsigned**, so Windows SmartScreen may show an unknown-publisher warning. Verify the download against [SHA256SUMS.txt](https://github.com/wookzzz57-beep/first-window/releases/latest/download/SHA256SUMS.txt).
+
+> **Development build (NOT an official release):** The [Windows App workflow](https://github.com/wookzzz57-beep/first-window/actions/workflows/windows-build.yml?query=branch%3Amain) packages the current `main` source on successful runs. Open the latest successful **main / push** run and download `FirstWindow-Windows-x64` under **Artifacts** (GitHub sign-in may be required). The ZIP contains `FirstWindow-Windows-x64.exe` and its matching `SHA256SUMS.txt`; verify the EXE before running it. Current development builds include opt-in standalone Agnes + Hermes advanced setup, but **target-Windows native Hermes and live Agnes image/video acceptance remain outstanding**. They are test candidates, not the verified v0.4.3 Release, even while the embedded package version still reads `0.4.3`. For new users, use the official stable download above.
 
 ## Under the simple surface
 
